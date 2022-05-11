@@ -1,5 +1,5 @@
-/// \file Common.h
-/// \brief Header for the class CCommon.
+/// \file BaseTask.h
+/// \brief Header for the class CBaseTask.
 
 // MIT License
 //
@@ -23,39 +23,30 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#ifndef __Common_h_
-#define __Common_h_
+#ifndef __BaseTask_h_
+#define __BaseTask_h_
 
-#include "ThreadSafeQueue.h"
-
-/// \brief Common.
+/// \brief Base task.
 ///
-/// Shared variables.
-/// \tparam CTaskClass Task descriptor.
+/// Describes a base task.
 
-template <class CTaskClass>
-class CCommon{
+class CBaseTask{
+  private:
+    static size_t m_nNumTasks; ///< Number of tasks extant.
+
   protected:
-    static CThreadSafeQueue<CTaskClass*> m_qRequest; ///< Request queue.
-    static CThreadSafeQueue<CTaskClass*> m_qResult; ///< Result queue.
+    size_t m_nTaskId = 0; ///< Task identifier.
+    size_t m_nThreadId = ~size_t(0); ///< Thread identifier for processing thread.
 
-    static bool m_bForceExit; ///< Force exit flag.
-    static bool m_bVerbose; ///< Verbosity flag.
-}; //CCommon
+  public:
+    CBaseTask(); ///< Default constructor.
 
-///////////////////////////////////////////////////////////////////////////////
-// Declarations of CCommon variables.
+    virtual void Process(); ///< Process task.
 
-template <class CTaskClass>
-CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qRequest; ///< Request queue.
+    const size_t GetTaskId() const; ///< Get task identifier.
 
-template <class CTaskClass>
-CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qResult; ///< Result queue.
+    void SetThreadId(const size_t); ///< Set thread identifier.
+    const size_t GetThreadId() const; ///< Get thread identifier.
+}; //CBaseTask
 
-template <class CTaskClass>
-bool CCommon<CTaskClass>::m_bForceExit = false; ///< Force exit flag.
-
-template <class CTaskClass>
-bool CCommon<CTaskClass>::m_bVerbose = false; ///< Verbosity flag.
-
-#endif //__Common_h_
+#endif //__BaseTask_h_

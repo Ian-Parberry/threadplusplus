@@ -1,5 +1,5 @@
-/// \file Common.h
-/// \brief Header for the class CCommon.
+/// \file ThreadManager.h
+/// \brief Header for the class CThreadManager.
 
 // MIT License
 //
@@ -23,39 +23,24 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#ifndef __Common_h_
-#define __Common_h_
+#ifndef __ThreadManager_h__
+#define __ThreadManager_h__
 
-#include "ThreadSafeQueue.h"
+#include <thread>
 
-/// \brief Common.
+#include "BaseThreadManager.h"
+#include "Task.h"
+
+/// \brief Thread manager.
 ///
-/// Shared variables.
-/// \tparam CTaskClass Task descriptor.
+/// The thread manager takes care of the health and feeding of the threads.
 
-template <class CTaskClass>
-class CCommon{
+class CThreadManager: public CBaseThreadManager<CTask>{
   protected:
-    static CThreadSafeQueue<CTaskClass*> m_qRequest; ///< Request queue.
-    static CThreadSafeQueue<CTaskClass*> m_qResult; ///< Result queue.
+    void ProcessTask(CTask*); ///< Process the result of a task.
 
-    static bool m_bForceExit; ///< Force exit flag.
-    static bool m_bVerbose; ///< Verbosity flag.
-}; //CCommon
+  public:
+    CThreadManager(); ///< Constructor.
+}; //CThreadManager
 
-///////////////////////////////////////////////////////////////////////////////
-// Declarations of CCommon variables.
-
-template <class CTaskClass>
-CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qRequest; ///< Request queue.
-
-template <class CTaskClass>
-CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qResult; ///< Result queue.
-
-template <class CTaskClass>
-bool CCommon<CTaskClass>::m_bForceExit = false; ///< Force exit flag.
-
-template <class CTaskClass>
-bool CCommon<CTaskClass>::m_bVerbose = false; ///< Verbosity flag.
-
-#endif //__Common_h_
+#endif //__ThreadManager_h__

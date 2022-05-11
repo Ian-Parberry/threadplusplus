@@ -1,5 +1,5 @@
-/// \file Common.h
-/// \brief Header for the class CCommon.
+/// \file Task.cpp
+/// \brief Code for the class CTask.
 
 // MIT License
 //
@@ -23,39 +23,17 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#ifndef __Common_h_
-#define __Common_h_
+#include <stdio.h>
 
-#include "ThreadSafeQueue.h"
+#include "Task.h"
 
-/// \brief Common.
-///
-/// Shared variables.
-/// \tparam CTaskClass Task descriptor.
+/// The default constructor.
 
-template <class CTaskClass>
-class CCommon{
-  protected:
-    static CThreadSafeQueue<CTaskClass*> m_qRequest; ///< Request queue.
-    static CThreadSafeQueue<CTaskClass*> m_qResult; ///< Result queue.
+CTask::CTask(): CBaseTask(){
+} //constructor
 
-    static bool m_bForceExit; ///< Force exit flag.
-    static bool m_bVerbose; ///< Verbosity flag.
-}; //CCommon
+/// Process this task.
 
-///////////////////////////////////////////////////////////////////////////////
-// Declarations of CCommon variables.
-
-template <class CTaskClass>
-CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qRequest; ///< Request queue.
-
-template <class CTaskClass>
-CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qResult; ///< Result queue.
-
-template <class CTaskClass>
-bool CCommon<CTaskClass>::m_bForceExit = false; ///< Force exit flag.
-
-template <class CTaskClass>
-bool CCommon<CTaskClass>::m_bVerbose = false; ///< Verbosity flag.
-
-#endif //__Common_h_
+void CTask::Process(){ 
+  printf("Task checking in.\n");
+} //Process

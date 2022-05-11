@@ -1,5 +1,5 @@
-/// \file Common.h
-/// \brief Header for the class CCommon.
+/// \file ThreadManager.cpp
+/// \brief Code for the class CThreadManager.
 
 // MIT License
 //
@@ -23,39 +23,31 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#ifndef __Common_h_
-#define __Common_h_
+#include <functional>
+#include <stdio.h>
 
-#include "ThreadSafeQueue.h"
+#include "ThreadManager.h"
 
-/// \brief Common.
-///
-/// Shared variables.
-/// \tparam CTaskClass Task descriptor.
+/// Default constructor.
 
-template <class CTaskClass>
-class CCommon{
-  protected:
-    static CThreadSafeQueue<CTaskClass*> m_qRequest; ///< Request queue.
-    static CThreadSafeQueue<CTaskClass*> m_qResult; ///< Result queue.
+CThreadManager::CThreadManager(): CBaseThreadManager(){
+} //constructor
 
-    static bool m_bForceExit; ///< Force exit flag.
-    static bool m_bVerbose; ///< Verbosity flag.
-}; //CCommon
+/// Report a result.
+/// \param pTask Pointer to a task.
 
-///////////////////////////////////////////////////////////////////////////////
-// Declarations of CCommon variables.
+void CThreadManager::ProcessTask(CTask* pTask){
+  if(pTask)printf("Task %zd was processed by thread %zd\n",
+    pTask->GetTaskId(), pTask->GetThreadId());
+} //Process
 
-template <class CTaskClass>
-CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qRequest; ///< Request queue.
+/// Report all completed tasks from the result queue and delete the tasks.
 
-template <class CTaskClass>
-CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qResult; ///< Result queue.
-
-template <class CTaskClass>
-bool CCommon<CTaskClass>::m_bForceExit = false; ///< Force exit flag.
-
-template <class CTaskClass>
-bool CCommon<CTaskClass>::m_bVerbose = false; ///< Verbosity flag.
-
-#endif //__Common_h_
+//void CThreadManager::Process(){ 
+//  CTask* pTask = nullptr; //task pointer
+//
+//  while(m_qResult.Delete(pTask)){ //for each task in the result queue
+//    ProcessTask(pTask); //report it
+//    delete pTask; //delete the task
+//  } //while
+//} //Process

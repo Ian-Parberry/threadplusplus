@@ -151,16 +151,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Common.cpp" />
-    <ClCompile Include="ThreadManager.cpp" />
-    <ClCompile Include="Thread.cpp" />
-    <ClCompile Include="Task.cpp" />
+    <ClCompile Include="BaseTask.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Common.h" />
-    <ClInclude Include="ThreadManager.h" />
+    <ClInclude Include="BaseThreadManager.h" />
     <ClInclude Include="Thread.h" />
-    <ClInclude Include="Task.h" />
+    <ClInclude Include="BaseTask.h" />
     <ClInclude Include="ThreadSafeQueue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
