@@ -36,7 +36,7 @@ class CTask: public CBaseTask{
   public:
     CTask(); ///< Default constructor.
 
-    virtual void Process(); ///< Process the task.
+    virtual void Perform(); ///< Perform the task.
 }; //CTask
 
 #endif //__Task_h_
