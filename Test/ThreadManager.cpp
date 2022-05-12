@@ -37,17 +37,8 @@ CThreadManager::CThreadManager(): CBaseThreadManager(){
 /// \param pTask Pointer to a task.
 
 void CThreadManager::ProcessTask(CTask* pTask){
-  if(pTask)printf("Task %zd was processed by thread %zd\n",
-    pTask->GetTaskId(), pTask->GetThreadId());
+  if(pTask)
+    printf("Task %zd was performed by thread %zd\n",
+      pTask->GetTaskId(), pTask->GetThreadId());
 } //Process
 
-/// Report all completed tasks from the result queue and delete the tasks.
-
-//void CThreadManager::Process(){ 
-//  CTask* pTask = nullptr; //task pointer
-//
-//  while(m_qResult.Delete(pTask)){ //for each task in the result queue
-//    ProcessTask(pTask); //report it
-//    delete pTask; //delete the task
-//  } //while
-//} //Process

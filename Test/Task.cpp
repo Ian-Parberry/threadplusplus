@@ -27,13 +27,13 @@
 
 #include "Task.h"
 
-/// The default constructor.
+/// Constructor.
 
 CTask::CTask(): CBaseTask(){
 } //constructor
 
-/// Process this task.
+/// Perform this task.
 
-void CTask::Process(){ 
-  printf("Task checking in.\n");
+void CTask::Perform(){ 
+  printf("Task %zu being performed by thread %zu.\n", m_nTaskId, m_nThreadId);
 } //Process
