@@ -25,17 +25,36 @@
 
 #include "ThreadManager.h"
 #include "Task.h"
+#include "Timer.h"
+
+/// \brief Main.
+///
+/// Main.
+/// \return 0 (What could possibly go wrong?)
 
 int main(){
-  CThreadManager* pThreadManager = new CThreadManager;
+  CThreadManager* pThreadManager = new CThreadManager; //thread manager
+  CTimer* pTimer = new CTimer; //timer for elapsed and CPU time
 
-  for(size_t i=0; i<100; i++)
+  for(size_t i=0; i<100; i++) //create 100 tasks
     pThreadManager->Insert(new CTask);
 
-  pThreadManager->Spawn();
-  pThreadManager->Wait();
-  pThreadManager->Process();
+  pTimer->Start(); //start timing CPU and elapsed time
+  printf("Starting at %s.\n", pTimer->GetCurrentDateAndTime().c_str());
 
+  pThreadManager->Spawn(); //spawn threads
+  pThreadManager->Wait(); //wait for threads to finish
+  
+  printf("Finishing at %s.\n", pTimer->GetCurrentDateAndTime().c_str());
+  printf("Elapsed time %s.\n", pTimer->GetElapsedTime().c_str());
+  printf("CPU time %s.\n", pTimer->GetCPUTime().c_str());
+
+  printf("Processing results computed by threads.\n");
+  pThreadManager->Process(); //process results
+
+  //clean up and exit
+  
+  delete pTimer;
   delete pThreadManager;
 
   return 0;
