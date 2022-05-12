@@ -33,11 +33,12 @@ CBaseTask::CBaseTask(){
   m_nTaskId = m_nNumTasks++; //set task identifier to next task
 } //constructor
 
-/// This function is a stub that is to be overridden in derived classes.
+/// Perform the task. This function is a stub that is to be overridden in
+/// derived classes.
 
-void CBaseTask::Process(){ 
+void CBaseTask::Perform(){ 
   //this is a stub
-} //Process
+} //Perform
 
 /// Reader function for the task identifier.
 /// \return The task identifier.

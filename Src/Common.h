@@ -40,7 +40,6 @@ class CCommon{
     static CThreadSafeQueue<CTaskClass*> m_qResult; ///< Result queue.
 
     static bool m_bForceExit; ///< Force exit flag.
-    static bool m_bVerbose; ///< Verbosity flag.
 }; //CCommon
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -54,8 +53,5 @@ CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qResult; ///< Result queue.
 
 template <class CTaskClass>
 bool CCommon<CTaskClass>::m_bForceExit = false; ///< Force exit flag.
-
-template <class CTaskClass>
-bool CCommon<CTaskClass>::m_bVerbose = false; ///< Verbosity flag.
 
 #endif //__Common_h_

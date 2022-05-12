@@ -1,5 +1,5 @@
 /// \file Thread.h
-/// \brief Header for the class CThread.
+/// \brief Header and code for the class CThread.
 
 // MIT License
 //
@@ -26,91 +26,63 @@
 #ifndef __Thread_h__
 #define __Thread_h__
 
-#include <limits>
-#include <stdio.h>
-
 #include "Common.h"
+
+///////////////////////////////////////////////////////////////////////////////
+// CThread definition.
 
 /// \brief The thread class.
 ///
-/// Values and functionality that need to be shared in common by the threads.
-/// The member variables of this class are declared `static` so that they
-/// can be shared by classes derived from it. This is sometimes called the
-/// _Borg Idiom_ in the Python community.
+/// Values and functionality for the threads.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
 class CThread: public CCommon<CTaskClass>{
-  private:
-    static size_t m_nNumThreads; ///< Number of threads extant.
-
   protected:
     size_t m_nThreadId = 0; ///< Thread identifier.
     
   public:
-    CThread(); ///< Default constructor.
+    CThread(size_t); ///< Constructor.
     
     void operator()(); ///< The code that gets run by each thread.
 }; //CThread
 
 ///////////////////////////////////////////////////////////////////////////////
-// Declarations of CThread variables.
-
-template <class CTaskClass>
-size_t CThread<CTaskClass>::m_nNumThreads = 0; ///< Number of threads.
-
-///////////////////////////////////////////////////////////////////////////////
 // CThread code.
 
 /// Constructor.
+/// \param n Thread identifier.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
-CThread<CTaskClass>::CThread():
-  m_nThreadId(m_nNumThreads++){ //thread identifier
+CThread<CTaskClass>::CThread(size_t n):
+  m_nThreadId(n){ //thread identifier
 } //constructor
 
-/// The function executed by a thread, which repeatedly pops a task
-/// from the thread-safe request queue, calls its `Process()` function,
-/// then places it on the result queue.
+/// The function executed by a thread, which repeatedly pops a task from the
+/// thread-safe request queue, calls its Perform() function, then places it
+/// on the result queue. It exits when the request queue is empty or when an
+/// exit is forced by CCommon<CTaskClass>::m_bForceExit being set to true.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
 void CThread<CTaskClass>::operator()(){
-  if(CCommon<CTaskClass>::m_bVerbose)
-    printf("Thread %zd starting up\n", m_nThreadId);
-
-  CTaskClass* pTask = nullptr; //current task descriptor
   bool bActive = true; //true to stay active, false to exit thread
 
-  while(bActive){ 
+  while(bActive){ //perform task loop
+    CTaskClass* pTask = nullptr; //current task descriptor
+   
     if(CCommon<CTaskClass>::m_bForceExit) //forced exit
-      bActive = false; //set inactive to exit loop
+      bActive = false; //trigger exit from loop
 
-    else{ //keep processing tasks
-      if(CCommon<CTaskClass>::m_qRequest.Delete(pTask)){ //grab task from request queue
-        if(pTask){ //safety
-          if(CCommon<CTaskClass>::m_bVerbose)
-            printf("Thread %zd starting task %zd\n", m_nThreadId,
-              pTask->GetTaskId());
+    else if(CCommon<CTaskClass>::m_qRequest.Delete(pTask) && pTask){ //next task
+      pTask->SetThreadId(m_nThreadId); //set task's thread identifier
+      pTask->Perform(); //perform the task
+      CCommon<CTaskClass>::m_qResult.Insert(pTask); //performed task result
+    } //if
 
-          pTask->Process(); //process the task
-          
-          if(CCommon<CTaskClass>::m_bVerbose)printf("Thread %zd finished task %zd\n", 
-            m_nThreadId, pTask->GetTaskId());
-
-          pTask->SetThreadId(m_nThreadId); //set task's thread identifier
-          CCommon<CTaskClass>::m_qResult.Insert(pTask); //place processed task on result queue
-        } //if
-      } //if
-
-      else bActive = false; //trigger exit
-    } //else
+    else bActive = false; //request queue empty, so trigger exit from loop
   } //while
-  
-  if(CCommon<CTaskClass>::m_bVerbose)
-    printf("Thread %zd shutting down\n", m_nThreadId);
 } //operator()()
-
 
 #endif //__BaseThread_h__

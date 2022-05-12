@@ -26,9 +26,18 @@
 #ifndef __BaseTask_h_
 #define __BaseTask_h_
 
-/// \brief Base task.
+#include <limits>
+
+constexpr size_t max_size_t = std::numeric_limits<size_t>::max(); ///< Max size_t.
+
+/// \brief Base task descriptor.
 ///
-/// Describes a base task.
+/// The base task descriptor describes a base task, including a task
+/// identifier, a thread identifier which is to be set by the thread that
+/// performs this task, and a function to perform it. You should derive your
+/// task desciptor from this class. Your task descriptor should implement a
+/// constructor for any task-related initialization and it should override
+/// function Perform() with the code to perform your task.
 
 class CBaseTask{
   private:
@@ -36,12 +45,12 @@ class CBaseTask{
 
   protected:
     size_t m_nTaskId = 0; ///< Task identifier.
-    size_t m_nThreadId = ~size_t(0); ///< Thread identifier for processing thread.
+    size_t m_nThreadId = max_size_t; ///< Identifier of thread that performed task.
 
   public:
     CBaseTask(); ///< Default constructor.
 
-    virtual void Process(); ///< Process task.
+    virtual void Perform(); ///< Perform this task.
 
     const size_t GetTaskId() const; ///< Get task identifier.
 

@@ -26,20 +26,23 @@
 #ifndef __ThreadSafeQueue_h__
 #define __ThreadSafeQueue_h__
 
-#include <Windows.h>
 #include <queue>
+#include <mutex>
+
+///////////////////////////////////////////////////////////////////////////////
+// CThreadSafeQueue definition.
 
 /// \brief Thread safe queue.
 ///
-/// A thread-safe CTaskClass structure for communicating between the worker
-/// threads and the main thread. It uses critical sections for safety.
+/// A thread-safe queue of task descriptors for communicating between the
+/// worker threads and the main thread. It uses an `std::mutex` for safety.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
 class CThreadSafeQueue{ 
   private:
-    CRITICAL_SECTION m_cCriticalSection; ///< Critical section for thread safety.
-    std::queue<CTaskClass> m_stdQueue; ///< The task queue.
+    std::mutex m_stdMutex; ///< Mutex for thread safety.
+    std::queue<CTaskClass> m_stdQueue; ///< The task descriptor queue.
 
   public:
     CThreadSafeQueue(); ///< Constructor.
@@ -52,36 +55,37 @@ class CThreadSafeQueue{
     const size_t GetSize() const; ///< Get number of tasks.
 }; //CThreadSafeQueue
 
-/// The constructor initializes the critical section.
+///////////////////////////////////////////////////////////////////////////////
+// CThreadSafeQueue code.
+
+/// Default constructor.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
 CThreadSafeQueue<CTaskClass>::CThreadSafeQueue(){
-  InitializeCriticalSection(&m_cCriticalSection); 
 } //constructor
 
-/// The destructor deletes the critical section.
+/// Default destructor.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
 CThreadSafeQueue<CTaskClass>::~CThreadSafeQueue(){
-  DeleteCriticalSection(&m_cCriticalSection);
 } //destructor
 
-/// Insert an element into the queue.
-/// A critical section is used to ensure a thread-safe insertion.
+/// Insert a task descriptor into the queue. A mutex is used to ensure
+/// thread safety.
 /// \tparam CTaskClass Task descriptor.
 /// \param element The element to be inserted into the queue.
 
 template <class CTaskClass>
 void CThreadSafeQueue<CTaskClass>::Insert(const CTaskClass& element){
-  EnterCriticalSection(&m_cCriticalSection); 
+  m_stdMutex.lock(); 
   m_stdQueue.push(element); 
-  LeaveCriticalSection(&m_cCriticalSection); 
+  m_stdMutex.unlock();
 } //Insert
 
-/// Delete and return an element from the queue.
-/// A critical section is used to ensure a thread-safe deletion.
+/// Delete and return a task descriptor from the queue. A mutex is used to
+/// ensure thread safety.
 /// \tparam CTaskClass Task descriptor.
 /// \param element [OUT] The element deleted from the queue.
 /// \return true if the delete was successful, ie. the queue was not empty.
@@ -89,31 +93,32 @@ void CThreadSafeQueue<CTaskClass>::Insert(const CTaskClass& element){
 template <class CTaskClass>
 bool CThreadSafeQueue<CTaskClass>::Delete(CTaskClass& element){
   bool success = false; //true if there was something to delete
-
-  EnterCriticalSection(&m_cCriticalSection); 
+  
+  m_stdMutex.lock();  
 
   if(!m_stdQueue.empty()){ //queue has something in it
     element = m_stdQueue.front(); //get element from front of queue
     m_stdQueue.pop(); //delete from front of queue
     success = true; //success
   } //if
-
-  LeaveCriticalSection(&m_cCriticalSection);
+  
+  m_stdMutex.unlock();
 
   return success;
 } //Delete
 
-/// Flush all entries out of the queue without processing them.
+/// Flush all task descriptors out of the queue without processing them.
+/// A mutex is used to ensure thread safety.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
 void CThreadSafeQueue<CTaskClass>::Flush(){
-  EnterCriticalSection(&m_cCriticalSection); 
+  m_stdMutex.lock();
 
   while(!m_stdQueue.empty()) //queue has something in it
     m_stdQueue.pop(); //delete from front of queue
-
-  LeaveCriticalSection(&m_cCriticalSection);
+  
+  m_stdMutex.unlock();
 } //Flush
 
 /// Reader function for the queue size.
@@ -122,7 +127,13 @@ void CThreadSafeQueue<CTaskClass>::Flush(){
 
 template <class CTaskClass>
 const size_t CThreadSafeQueue<CTaskClass>::GetSize() const{
-  return m_stdQueue.size();
+  size_t nSize = 0; //for the size
+  
+  m_stdMutex.lock();
+  nSize = m_stdQueue.size();
+  m_stdMutex.unlock();
+
+  return nSize;
 } //GetSize
 
 #endif //__ThreadSafeQueue_h__

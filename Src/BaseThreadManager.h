@@ -1,5 +1,5 @@
 /// \file BaseThreadManager.h
-/// \brief Header for the class CBaseThreadManager.
+/// \brief Header and code for the class CBaseThreadManager.
 
 // MIT License
 //
@@ -33,15 +33,23 @@
 #include "Thread.h"
 #include "BaseTask.h"
 
-/// \brief Thread manager.
+///////////////////////////////////////////////////////////////////////////////
+// CBaseThreadManager definition.
+
+/// \brief The base thread manager.
 ///
 /// The thread manager takes care of the health and feeding of the threads.
+/// You should derive your thread manager from this class with the template
+/// CTaskClass being your task descriptor class derived from CBaseTask.
+/// Your thread manager should implement a constructor for any task-related
+/// initialization and it should override function ProcessTask() with the
+/// processing required for your task.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
 class CBaseThreadManager: public CCommon<CTaskClass>{
   protected:
-    std::vector<std::thread> m_vThreads; ///< Thread list.
+    std::vector<std::thread> m_vThread; ///< Thread list.
     
     virtual void ProcessTask(CTaskClass*); ///< Process the result of a task.
 
@@ -52,11 +60,9 @@ class CBaseThreadManager: public CCommon<CTaskClass>{
     void Insert(CTaskClass*); ///< Insert a task.
 
     void Spawn(); ///< Spawn threads.
-    void Wait(); ///< Wait for threads to terminate.
+    void Wait(); ///< Wait for threads to finish all tasks.
     void ForceExit(); ///< Force all threads to terminate.
     void Process(); ///< Process results of all tasks.
-
-    void SetVerbosity(bool=true); ///< Set verbosity.
 }; //CBaseThreadManager
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -69,7 +75,7 @@ template <class CTaskClass>
 CBaseThreadManager<CTaskClass>::CBaseThreadManager(){
 } //constructor
 
-/// The destructor. Delete any remaining tasks in the request and result
+/// The destructor deletes any remaining tasks in the request and result
 /// queues. Both queues should be empty at this point, but this is for safety.
 /// \tparam CTaskClass Task descriptor.
 
@@ -88,7 +94,7 @@ CBaseThreadManager<CTaskClass>::~CBaseThreadManager(){
     delete pTask; 
 } //destructor
 
-/// Insert a task into the request queue.
+/// Insert a task descriptor into the request queue.
 /// \tparam CTaskClass Task descriptor.
 /// \param p Pointer to a task.
 
@@ -104,7 +110,7 @@ void CBaseThreadManager<CTaskClass>::Insert(CTaskClass* p){
 template <class CTaskClass>
 void CBaseThreadManager<CTaskClass>::Spawn(){ 
   for(size_t i=0; i<std::thread::hardware_concurrency() - 1; i++)
-    m_vThreads.push_back(std::thread((CThread<CTaskClass>())));
+    m_vThread.push_back(std::thread((CThread<CTaskClass>(i))));
 } //Spawn 
 
 /// Force all threads to terminate and wait until they do.
@@ -121,38 +127,30 @@ void CBaseThreadManager<CTaskClass>::ForceExit(){
 
 template <class CTaskClass>
 void CBaseThreadManager<CTaskClass>::Wait(){
-  for_each(m_vThreads.begin(), m_vThreads.end(), std::mem_fn(&std::thread::join));
+  for_each(m_vThread.begin(), m_vThread.end(), std::mem_fn(&std::thread::join));
 } //Wait
 
-/// Process the results of a task.
+/// Process the results of a task. This function is a stub which you should
+/// override in your derived thread manager class.
 /// \tparam CTaskClass Task descriptor.
 /// \param pTask Pointer to a task descriptor.
 
 template <class CTaskClass>
 void CBaseThreadManager<CTaskClass>::ProcessTask(CTaskClass* pTask){
- //stub
+  //stub
 } //ProcessTask
 
-/// Process and delete all completed tasks from the result queue.
+/// Process and delete all completed task descriptors from the result queue.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
 void CBaseThreadManager<CTaskClass>::Process(){ 
   CTaskClass* pTask = nullptr; //task pointer
 
-  while(CCommon<CTaskClass>::m_qResult.Delete(pTask)){ //for each task in the result queue
-    ProcessTask(pTask); //report it
-    delete pTask; //delete the task
+  while(CCommon<CTaskClass>::m_qResult.Delete(pTask)){ //for each task descriptor
+    ProcessTask(pTask); //process it
+    delete pTask; //delete the task descriptor
   } //while
 } //Process
-
-/// Set verbosity.
-/// \tparam CTaskClass Task descriptor.
-/// \param bVerbose True for verbose, false for quiet. Defaults to true.
-
-template <class CTaskClass>
-void CBaseThreadManager<CTaskClass>::SetVerbosity(bool bVerbose){
-  CCommon<CTaskClass>::m_bVerbose = bVerbose;
-} //SetVerbosity
 
 #endif //__BaseThreadManager_h__
