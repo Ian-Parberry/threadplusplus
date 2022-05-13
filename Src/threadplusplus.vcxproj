@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{8B6E88A5-55F4-46D0-A3BB-6F2413D67242}</ProjectGuid>
+    <ProjectGuid>{FBB1E062-1629-4571-B25E-6E41DB510FD5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>multithread</RootNamespace>
+    <RootNamespace>threadplusplus</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
