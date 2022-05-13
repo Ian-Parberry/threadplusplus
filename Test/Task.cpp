@@ -36,4 +36,4 @@ CTask::CTask(): CBaseTask(){
 
 void CTask::Perform(){ 
   printf("Task %zu being performed by thread %zu.\n", m_nTaskId, m_nThreadId);
-} //Process
+} //Perform
