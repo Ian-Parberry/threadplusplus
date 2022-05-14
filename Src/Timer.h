@@ -36,6 +36,9 @@ typedef std::chrono::system_clock sysclock; ///< Shorthand for system clock.
 typedef std::chrono::time_point
   <std::chrono::system_clock> systime_point; ///< Shorthand for sysclock time point.
 
+const std::string CommaSeparatedString(const size_t); ///< Comma separated string.
+const std::string to_string(const float, const size_t); ///< Float to string.
+
 /// \brief Timer for elapsed time and CPU time.
 ///
 /// The timer is charged with everything that is time-related, in particular,
@@ -50,8 +53,6 @@ class CTimer{
     float m_fCPUTimeStart; ///< CPU time in seconds.
 
     const uint64_t CPUTime() const; ///< Compute CPU time.
-    const std::string CommaSeparatedString(size_t) const; ///< Comma-separated string.
-    const std::string to_string(float, size_t) const; ///< Float to string.
     const std::string TimeString(float seconds, size_t n) const; ///< Time as a string.
 
     const std::string GetDateAndTime(const systime_point) const; ///< Get date and time.

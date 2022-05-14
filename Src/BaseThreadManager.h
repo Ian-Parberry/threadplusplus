@@ -50,6 +50,7 @@ template <class CTaskClass>
 class CBaseThreadManager: public CCommon<CTaskClass>{
   protected:
     std::vector<std::thread> m_vThread; ///< Thread list.
+    size_t m_nNumThreads = 0; ///< Number of threads in use.
     
     virtual void ProcessTask(CTaskClass*); ///< Process the result of a task.
 
@@ -63,6 +64,8 @@ class CBaseThreadManager: public CCommon<CTaskClass>{
     void Wait(); ///< Wait for threads to finish all tasks.
     void ForceExit(); ///< Force all threads to terminate.
     void Process(); ///< Process results of all tasks.
+
+    const size_t GetNumThreads() const; ///< Get number of threads.
 }; //CBaseThreadManager
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -73,6 +76,7 @@ class CBaseThreadManager: public CCommon<CTaskClass>{
 
 template <class CTaskClass>
 CBaseThreadManager<CTaskClass>::CBaseThreadManager(){
+  m_nNumThreads = std::thread::hardware_concurrency() - 1;
 } //constructor
 
 /// The destructor deletes any remaining tasks in the request and result
@@ -109,7 +113,7 @@ void CBaseThreadManager<CTaskClass>::Insert(CTaskClass* p){
 
 template <class CTaskClass>
 void CBaseThreadManager<CTaskClass>::Spawn(){ 
-  for(size_t i=0; i<std::thread::hardware_concurrency() - 1; i++)
+  for(size_t i=0; i<m_nNumThreads; i++)
     m_vThread.push_back(std::thread((CThread<CTaskClass>(i))));
 } //Spawn 
 
@@ -152,5 +156,14 @@ void CBaseThreadManager<CTaskClass>::Process(){
     delete pTask; //delete the task descriptor
   } //while
 } //Process
+
+/// Reader function for the number of threads used by this application.
+/// Assumes that `m_nNumThreads` contains this value.
+/// \return Number of threads used.
+
+template <class CTaskClass>
+const size_t CBaseThreadManager<CTaskClass>::GetNumThreads() const{
+  return m_nNumThreads;
+} //GetNumThreads
 
 #endif //__BaseThreadManager_h__

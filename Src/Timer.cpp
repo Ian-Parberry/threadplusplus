@@ -33,21 +33,15 @@
   #include <time.h>
 #endif
 
-/// Call `Start()` in case it isn't called elsewhere.
-
-CTimer::CTimer(){
-  Start();
-} //constructor
-
 ///////////////////////////////////////////////////////////////////////////////
-// String functions.
+// Helper functions.
 
-/// Converts the number to an std::string and inserts commas every three 
+/// Convert a number to an `std::string` and insert commas every three 
 /// digits from the least-significant end.
 /// \param n The number to be converted.
-/// \return The parameter n as a comma-separated string.
+/// \return The number as a comma-separated string.
 
-const std::string CTimer::CommaSeparatedString(size_t n) const{ 
+const std::string CommaSeparatedString(const size_t n){ 
   std::string s = std::to_string(n); //string for comma-separated number
   const int nStart = (int)s.length() - 3; //position of first comma
 
@@ -62,63 +56,107 @@ const std::string CTimer::CommaSeparatedString(size_t n) const{
 /// so we'll have to get creative with `std::ostringstream` instead.
 /// \param x Floating point number
 /// \param n Maximum number of digits after the decimal.
-/// \return Fixed-precision string with no trailing zeros.
+/// \re turn Fixed-precision string with no trailing zeros.
 
-const std::string CTimer::to_string(float x, size_t n) const{
-  if(fabs(x*pow(10, n)) < 5)return(std::string("0")); 
-
-  //use ostringstream to limit x to n digits after the decimal point
-
+const std::string to_string(const float x, const size_t n){
   std::ostringstream out;
   out.precision(n);
   out << std::fixed << x;
 
-  const std::string s = out.str(); //s contains x with precision n 
+  std::string s = out.str(); //s contains x with precision n 
 
   //find last non-zero, non-decimal-point digit of s
 
-  size_t i = s.length() - 1; //index
+  int i = (int)s.length() - 1; //index
+
   while(i >= 0 && (s[i] == '0' || s[i] == '.'))
     i--;
 
   //truncate x to last non-zero, non-decimal-point digit
 
-  return (i < 0)? std::string(): s.substr(0, i + 1);
+  return s.substr(0, i + 1);
 } //to_string
 
-/// Format seconds into to a string of days, hours, minutes, and seconds,
+/// \brief Append comma separator.
+
+void AppendCommaSeparator(std::string& s){
+  if(!s.empty())s += ", ";
+} //AppendCommaSeparator
+
+///////////////////////////////////////////////////////////////////////////////
+// CTimer functions.
+
+/// Call `Start()` in case it isn't called elsewhere.
+
+CTimer::CTimer(){
+  Start();
+} //constructor
+
+///////////////////////////////////////////////////////////////////////////////
+// String functions.
+
+/// Format seconds into to a string of days, hours, minutes, and fSeconds,
 /// with a fractional number of seconds if required.
-/// \param seconds Initial number of seconds.
+/// \param fSeconds Initial number of seconds.
 /// \param n Number of decimal places in the seconds field of the string.
 /// \return String of days, hours, minutes, and seconds.
 
-const std::string CTimer::TimeString(float seconds, size_t n) const{
-  std::string s; //the result
+const std::string CTimer::TimeString(float fSeconds, size_t n) const{
+  std::string s; //for the time string, initially empty
+  
+  constexpr size_t SECONDS_PER_MINUTE = 60;
+  constexpr size_t SECONDS_PER_HOUR = 60*SECONDS_PER_MINUTE;
+  constexpr size_t SECONDS_PER_DAY = 24*SECONDS_PER_HOUR;
 
-  const size_t days = (size_t)floor(seconds/86400);
-  seconds -= days*86400;
+  //number of days
 
-  if(days > 0)
-    s += std::to_string(days) + (days > 1? " days": " day");
+  const size_t nDays = (size_t)floor(fSeconds/SECONDS_PER_DAY);
+  fSeconds -= nDays*SECONDS_PER_DAY;
 
-  const size_t hours = (size_t)floor(seconds/3600);
-  seconds -= hours*3600;
+  if(nDays > 0)
+    s += std::to_string(nDays) + (nDays > 1? " days": " day");
 
-  if(hours > 0){
-    if(!s.empty())s += ", ";
-    s += std::to_string(hours) + " hr";
+  //number of hours
+
+  const size_t nHours = (size_t)floor(fSeconds/SECONDS_PER_HOUR);
+  fSeconds -= nHours*SECONDS_PER_HOUR;
+
+  if(nHours > 0){
+    AppendCommaSeparator(s); 
+    s += std::to_string(nHours) + " hr";
   } //if
 
-  const size_t minutes = (size_t)floor(seconds/60);
-  seconds -= minutes*60;
+  //number of minutes
 
-  if(minutes > 0){
-    if(!s.empty())s += ", ";
-    s += std::to_string(minutes) + " min";
+  const size_t nMinutes = (size_t)floor(fSeconds/SECONDS_PER_MINUTE);
+  fSeconds -= nMinutes*SECONDS_PER_MINUTE;
+
+  if(nMinutes > 0){
+    AppendCommaSeparator(s);
+    s += std::to_string(nMinutes) + " min";
   } //if
   
-  if(!s.empty())s += ", ";
-  s += to_string(seconds, n) + " sec";
+  AppendCommaSeparator(s);
+
+  //number of seconds
+
+  if(nMinutes >= 1){
+    const size_t nSeconds = size_t(std::ceil(fSeconds));
+    if(nSeconds > 0)
+      s += std::to_string(nSeconds) + " sec";
+  } //if
+
+  else if(fSeconds >= 1.0f)
+    s += to_string(fSeconds, n) + " sec";
+  
+  //number of milliseconds when less than 1 second
+
+  else if(fSeconds >= 0.001f)
+    s += std::to_string(size_t(std::ceilf(fSeconds*1000.0f))) + " ms";
+
+  else s += "< 1 ms"; //less than a millisecond, so whatever
+
+  //s now contains a properly formatted time string
 
   return s;
 } //TimeString
