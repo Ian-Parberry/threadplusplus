@@ -56,7 +56,7 @@ const std::string CommaSeparatedString(const size_t n){
 /// so we'll have to get creative with `std::ostringstream` instead.
 /// \param x Floating point number
 /// \param n Maximum number of digits after the decimal.
-/// \re turn Fixed-precision string with no trailing zeros.
+/// \return Fixed-precision string with no trailing zeros.
 
 const std::string to_string(const float x, const size_t n){
   std::ostringstream out;
@@ -78,6 +78,9 @@ const std::string to_string(const float x, const size_t n){
 } //to_string
 
 /// \brief Append comma separator.
+///
+/// Append a comma and a space to a string provided it is non-empty.
+/// \param s [in, out] String to append to.
 
 void AppendCommaSeparator(std::string& s){
   if(!s.empty())s += ", ";

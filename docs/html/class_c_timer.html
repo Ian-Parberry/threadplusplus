@@ -108,12 +108,6 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:afc6eed0105c88f68633917f71851b3e0"><td class="memItemLeft" align="right" valign="top">const uint64_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_timer.html#afc6eed0105c88f68633917f71851b3e0">CPUTime</a> () const</td></tr>
 <tr class="memdesc:afc6eed0105c88f68633917f71851b3e0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compute CPU time.  <a href="class_c_timer.html#afc6eed0105c88f68633917f71851b3e0">More...</a><br /></td></tr>
 <tr class="separator:afc6eed0105c88f68633917f71851b3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3149090e04aa72c196ec80402f76acec"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_timer.html#a3149090e04aa72c196ec80402f76acec">CommaSeparatedString</a> (size_t) const</td></tr>
-<tr class="memdesc:a3149090e04aa72c196ec80402f76acec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comma-separated string.  <a href="class_c_timer.html#a3149090e04aa72c196ec80402f76acec">More...</a><br /></td></tr>
-<tr class="separator:a3149090e04aa72c196ec80402f76acec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada01c6c3471195900264e77efd9295fd"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_timer.html#ada01c6c3471195900264e77efd9295fd">to_string</a> (float, size_t) const</td></tr>
-<tr class="memdesc:ada01c6c3471195900264e77efd9295fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Float to string.  <a href="class_c_timer.html#ada01c6c3471195900264e77efd9295fd">More...</a><br /></td></tr>
-<tr class="separator:ada01c6c3471195900264e77efd9295fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ada1c103b8588a37e90e901d50f42a96c"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_timer.html#ada1c103b8588a37e90e901d50f42a96c">TimeString</a> (float seconds, size_t n) const</td></tr>
 <tr class="memdesc:ada1c103b8588a37e90e901d50f42a96c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Time as a string.  <a href="class_c_timer.html#ada1c103b8588a37e90e901d50f42a96c">More...</a><br /></td></tr>
 <tr class="separator:ada1c103b8588a37e90e901d50f42a96c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,7 +127,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fCPUTimeStart</b><
 <tr class="separator:a7c660eae20799a9b978920baa2061678"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p >The timer is charged with everything that is time-related, in particular, elapsed time, CPU time, and clock time. The member functions return time intervals measured from the time <a class="el" href="class_c_timer.html#a4c95a1f25b3ef73436d4876260a2e013" title="Start timing.">Start()</a> is called to the current time. The CPU time reported is the total summed over all threads. Uses std::chrono to do the heavy lifting. <br  />
+<div class="textblock"><p >The timer is charged with everything that is time-related, in particular, elapsed time, CPU time, and clock time. The member functions return time intervals measured from the time <code><a class="el" href="class_c_timer.html#a4c95a1f25b3ef73436d4876260a2e013" title="Start timing.">Start()</a></code> is called to the current time. The CPU time reported is the total summed over all threads. Uses <code>std::chrono</code> to do the heavy lifting. <br  />
  </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a93e4d770fd09f5e1b984768620cc52bf" name="a93e4d770fd09f5e1b984768620cc52bf"></a>
@@ -155,39 +149,6 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fCPUTimeStart</b><
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3149090e04aa72c196ec80402f76acec" name="a3149090e04aa72c196ec80402f76acec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3149090e04aa72c196ec80402f76acec">&#9670;&nbsp;</a></span>CommaSeparatedString()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string CTimer::CommaSeparatedString </td>
-          <td>(</td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>n</em></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >Converts the number to an std::string and inserts commas every three digits from the least-significant end. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">n</td><td>The number to be converted. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The parameter n as a comma-separated string. </dd></dl>
-
-</div>
-</div>
 <a id="afc6eed0105c88f68633917f71851b3e0" name="afc6eed0105c88f68633917f71851b3e0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afc6eed0105c88f68633917f71851b3e0">&#9670;&nbsp;</a></span>CPUTime()</h2>
 
@@ -332,7 +293,7 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fCPUTimeStart</b><
           <td class="memname">const std::string CTimer::TimeString </td>
           <td>(</td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>seconds</em>, </td>
+          <td class="paramname"><em>fSeconds</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -352,9 +313,9 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fCPUTimeStart</b><
   </tr>
 </table>
 </div><div class="memdoc">
-<p >Format seconds into to a string of days, hours, minutes, and seconds, with a fractional number of seconds if required. </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Format seconds into to a string of days, hours, minutes, and fSeconds, with a fractional number of seconds if required. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">seconds</td><td>Initial number of seconds. </td></tr>
+    <tr><td class="paramname">fSeconds</td><td>Initial number of seconds. </td></tr>
     <tr><td class="paramname">n</td><td>Number of decimal places in the seconds field of the string. </td></tr>
   </table>
   </dd>
@@ -363,54 +324,10 @@ float&#160;</td><td class="memItemRight" valign="bottom"><b>m_fCPUTimeStart</b><
 
 </div>
 </div>
-<a id="ada01c6c3471195900264e77efd9295fd" name="ada01c6c3471195900264e77efd9295fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada01c6c3471195900264e77efd9295fd">&#9670;&nbsp;</a></span>to_string()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string CTimer::to_string </td>
-          <td>(</td>
-          <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>n</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">private</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<p >Convert float to a fixed-precision string without trailing zeros. Unfortunately, <code>std::to_string</code> does not have a way to limit precision, so we'll have to get creative with <code>std::ostringstream</code> instead. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>Floating point number </td></tr>
-    <tr><td class="paramname">n</td><td>Maximum number of digits after the decimal. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Fixed-precision string with no trailing zeros. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 12 2022 16:37:40 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
+Generated on Thu May 19 2022 16:14:11 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
 </small></address>
 </body>
 </html>

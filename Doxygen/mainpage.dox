@@ -4,6 +4,15 @@
 
 ## 1. Introduction
 
+\anchor fig1
+\image html phase1.png "Fig. 1: The thread manager sequentially creates and inserts task descriptors into the request queue." width=35%
+
+\anchor fig2
+\image html phase2.png "Fig. 2: Threads perform the tasks from the request queue and transfer the completed task descriptors into the result queue." width=35%
+
+\anchor fig3
+\image html phase3.png "Fig. 3: The thread manager sequentially processes the completed task descriptors from the result queue." width=35%
+
 ## 2. Compiling the Code
 
 ### For Windows Users:

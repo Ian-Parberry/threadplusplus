@@ -117,6 +117,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0dfb5636ec4d410e879473b485e37a16"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_base_thread_manager.html#a0dfb5636ec4d410e879473b485e37a16">Process</a> ()</td></tr>
 <tr class="memdesc:a0dfb5636ec4d410e879473b485e37a16"><td class="mdescLeft">&#160;</td><td class="mdescRight">Process results of all tasks.  <a href="class_c_base_thread_manager.html#a0dfb5636ec4d410e879473b485e37a16">More...</a><br /></td></tr>
 <tr class="separator:a0dfb5636ec4d410e879473b485e37a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeec7eb022bd2928b233cd0418d7a839a"><td class="memItemLeft" align="right" valign="top">const size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_base_thread_manager.html#aeec7eb022bd2928b233cd0418d7a839a">GetNumThreads</a> () const</td></tr>
+<tr class="memdesc:aeec7eb022bd2928b233cd0418d7a839a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get number of threads.  <a href="class_c_base_thread_manager.html#aeec7eb022bd2928b233cd0418d7a839a">More...</a><br /></td></tr>
+<tr class="separator:aeec7eb022bd2928b233cd0418d7a839a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -130,6 +133,10 @@ Protected Attributes</h2></td></tr>
 std::vector&lt; std::thread &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_vThread</b></td></tr>
 <tr class="memdesc:a2b0b0ad253725d9bab12ec9efd15dbf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread list. <br /></td></tr>
 <tr class="separator:a2b0b0ad253725d9bab12ec9efd15dbf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e9ef0ff4397c4703969221e4f99e7f7"><td class="memItemLeft" align="right" valign="top"><a id="a3e9ef0ff4397c4703969221e4f99e7f7" name="a3e9ef0ff4397c4703969221e4f99e7f7"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_nNumThreads</b> = 0</td></tr>
+<tr class="memdesc:a3e9ef0ff4397c4703969221e4f99e7f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of threads in use. <br /></td></tr>
+<tr class="separator:a3e9ef0ff4397c4703969221e4f99e7f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
@@ -228,6 +235,23 @@ template&lt;class CTaskClass &gt; </div>
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="aeec7eb022bd2928b233cd0418d7a839a" name="aeec7eb022bd2928b233cd0418d7a839a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeec7eb022bd2928b233cd0418d7a839a">&#9670;&nbsp;</a></span>GetNumThreads()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class CTaskClass &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">const size_t <a class="el" href="class_c_base_thread_manager.html">CBaseThreadManager</a>&lt; CTaskClass &gt;::GetNumThreads</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >Reader function for the number of threads used by this application. Assumes that <code>m_nNumThreads</code> contains this value. </p><dl class="section return"><dt>Returns</dt><dd>Number of threads used. </dd></dl>
 
 </div>
 </div>
@@ -372,7 +396,7 @@ template&lt;class CTaskClass &gt; </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu May 12 2022 16:37:40 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
+Generated on Thu May 19 2022 16:14:11 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
 </small></address>
 </body>
 </html>
