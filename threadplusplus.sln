@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test", "Test\Test.vcxproj", "{ACEE6ED1-0034-487A-B331-94532DCC96AF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FBB1E062-1629-4571-B25E-6E41DB510FD5} = {FBB1E062-1629-4571-B25E-6E41DB510FD5}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "threadplusplus", "Src\threadplusplus.vcxproj", "{FBB1E062-1629-4571-B25E-6E41DB510FD5}"
 EndProject

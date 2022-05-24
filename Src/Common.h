@@ -30,7 +30,10 @@
 
 /// \brief Common.
 ///
-/// Shared variables.
+/// Variables to be shared between the threads and the thread manager,
+/// including the request queue, the result queue, and a Boolean value
+/// to be set if and when you want all threads to terminate without
+/// completing any more tasks.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>

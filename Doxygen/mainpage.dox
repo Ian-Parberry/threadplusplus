@@ -4,14 +4,162 @@
 
 ## 1. Introduction
 
+This code provides multithreaded support the C++ way
+for computation-heavy tasks such as backtracking
+or exhaustive search.
+
+\anchor sec1point1
+### 1.1 The Task Descriptor
+
+The task descriptor describes a task to be performed by a single thread.
+This code provides a base
+task descriptor CBaseTask that includes a task
+identifier, a thread identifier, and a function to perform the task. You should derive
+your task descriptor from CBaseTask. 
+
+Your task descriptor should implement a constructor for any task-related
+initialization and it should override function CBaseTask::Perform() with the code to
+perform your task. Be sure to provide space for the task results, if any, since the
+completed task descriptors will be used after thread termination to process the results.
+Each task descriptor you instantiate will automatically 
+get a unique task identifier that can be read using CBaseTask::GetTaskId().
+This is maintained using a private static atomic member variable 
+that is incremented and copied to a protected member variable by the CBaseTask
+constructor. It is recommended that you do not interfere with this process.
+You are responsible for setting the thread identifier by calling
+CBaseTask::SetThreadId() when this task descriptor is assigned to a thread. The thread
+identifier can be read later by calling CBaseTask::GetThreadId(). The task and thread
+identifiers are provided primarily for debugging purposes and do not impose a 
+significant load on time or memory requirements.
+
+\anchor sec1point2
+### 1.2 The Thread-Safe Queue
+
 \anchor fig1
-\image html phase1.png "Fig. 1: The thread manager sequentially creates and inserts task descriptors into the request queue." width=35%
+\image html queue.png "Fig. 1: The thread-safe queue allows simultaneous requests to insert and delete from concurrent threads, but only one can proceeed at a time." width=20%
+
+The thread-safe queue CThreadSafeQueue maintains a private `std::queue` of task descriptors for communicating task descriptors between the
+threads and the thread manager. It uses an `std::mutex` for safety.
+The mutex is locked whenever a thread is in the process of inserting or deleting
+a task request from the queue. All other threads are forced to wait until the
+process is complete and the thread unlocks the mutex.
+Since inserting to and deleting from an `std::queue` is fairly
+efficient, this should not be a significant fraction of time assuming that this code
+is to be used for computation-heavy tasks such as backtracking or exhaustive search.
+As shown in \ref fig1 "Fig. 1", multiple  insert/delete requests
+from concurrent threads can come
+into the thread-safe queue simultaneously (the colored arrows at the bottom), but
+the mutex allows only one to proceed at a time (in this case the blue arrow).
+
+CThreadSafeQueue is a templated class which should be instantiated using your
+task descriptor class derived from CBaseTask (see \ref sec1point1 "Section 1.1").
+
+\anchor sec1point3
+### 1.3 The Common Variables Class
+
+The common variables class CCommon contains variables to be shared between threads and
+the thread manager without the need for providing them as parameters.
+These consist of the request queue, a thread-safe queue of pointers to 
+uncompleted task descriptors
+(see \ref sec1point2 "Section 1.2"); 
+the result queue, a thread-safe queue of pointers to 
+completed task descriptors (see also \ref sec1point2 "Section 1.2"); and a Boolean value
+CCommon::m_bForceExit to be set if and when you want all threads to terminate without
+completing any more tasks.
+
+CCommon is a templated class which should be instantiated using your
+task descriptor class derived from CBaseTask (see \ref sec1point1 "Section 1.1").
+
+\anchor sec1point4
+### 1.4 The Thread Manager
+
+The thread manager takes care of inserting task requests into the
+request queue, initiating the threads, waiting until all threads terminate,
+and processing the completed task requests from the result queue.
+This code provides a base
+thread manager CBaseThreadManager,
+a templated class derived from CCommon (see \ref sec1point3 "Section 1.3"). 
+You should derive your templated thread manager from CBaseThreadManager
+using your task descriptor class derived from CBaseTask (see \ref sec1point1 "Section 1.1")
+to instantiate the template. Your task manager should overload function
+CBaseThreadManager::ProcessTask() to process the results from a completed task descriptor. 
+
+Your code should call CBaseThreadManager::Insert() in a loop that creates new task
+descriptors (see \ref sec1point1 "Section 1.1"). 
+CBaseThreadManager will insert these task requests into the
+thread-safe request queue (see \ref sec1point2 "Section 1.2") that it inherits
+from CCommon (see \ref sec1point3 "Section 1.3").
+This process is illustrated in \ref fig2 "Fig. 2".
 
 \anchor fig2
-\image html phase2.png "Fig. 2: Threads perform the tasks from the request queue and transfer the completed task descriptors into the result queue." width=35%
+\image html phase1.png "Fig. 2: The thread manager sequentially creates and inserts task descriptors into the request queue." width=35%
+
+It should then call CBaseThreadManager::Spawn() to spawn the threads, which delete task
+descriptors from the thread-safe request queue, completes the tasks, and inserts
+completed task descriptors into the thread-safe result queue.
+This process will be described in more detail in \ref sec1point5 "Section 1.5".
+This process is illustrated in \ref fig3 "Fig. 3".
 
 \anchor fig3
-\image html phase3.png "Fig. 3: The thread manager sequentially processes the completed task descriptors from the result queue." width=35%
+\image html phase2.png "Fig. 3: Threads perform the tasks from the request queue and transfer the completed task descriptors into the result queue." width=35%
+
+Your code should then call CBaseThreadManager::Wait() to wait until all threads terminate.
+After this function returns, your code should call CBaseThreadManager::Process() to
+process the completed task descriptors. CBaseThreadManager::Process() will call your
+overloaded virtual CBaseThreadManager::ProcessTask() which, if you have done
+your job correctly, will report the results, ideally to the console and to a file
+(it's up to you). This is executed sequentially becaise it is
+assumed that the bulk of the computation has been performed in parallel by the concurrent
+threads and all that remains is to tally the results.
+This process is illustrated in \ref fig4 "Fig. 4".
+
+\anchor fig4
+\image html phase3.png "Fig. 4: The thread manager sequentially processes the completed task descriptors from the result queue." width=35%
+
+\anchor sec1point5
+### 1.5 The Threads
+
+The thread class CThread consists of a loop
+in which a task descriptor (see \ref sec1point1 "Section 1.1") is deleted from the thread-safe
+request queue (see \ref sec1point2 "Section 1.2") 
+inherited from CCommon (see \ref sec1point3 "Section 1.3"),
+the task described in the task descriptor is performed by
+calling your task descriptor's function overriding CBaseTask::Perform(),
+and the completed task descriptor is inserted into the thread-safe result
+queue(see \ref sec1point2 "Section 1.2"), also 
+inherited from CCommon (see \ref sec1point3 "Section 1.3").
+The loop exits when either the request queue is empty
+(CThreadSafeQueue::Delete() returns `false`) or the shared
+Boolean variable CCommon::m_bForceExit is set to `true`,
+at which time the thread terminates.
+
+\anchor sec1point6
+### 1.6 The Timer
+
+Assuming that you will be using this code for backtracking or exhaustive search,
+you will also be interested in measuring the CPU time used over the whole computation,
+summed over all of the threads, and the elapsed time. The elapsed time
+should ideally be the CPU time divided by the number of threads, but this assumes that you
+have made good decisions about how your tasks should be parallelized.
+
+The timer class CTimer has a start function CTimer::Start() that should be called
+from your code when you want to start measuring time, leaving the decision
+over whether to measure initialization time completely up to you.
+The main functions of interest are
+CTimer::GetCurrentDateAndTime() which returns the current date and time as an `std::string`,
+and CTimer::GetElapsedTime() and CTimer::GetCPUTime() which return,
+respectively, the elapsed and CPU time as pretty-printed `std::string`s.
+It's up to you to instantiate an instance of CTimer in your code, make the appropriate
+function calls, and
+output the resulting strings to the console or to a file using,
+for example, `std::iostream`, `std::fstream`, or `stdio`.
+
+CTimer uses `std::chrono` to measure elapsed time, but since there is (alas!) a dearth
+of platform-independent code to measure CPU time,
+we are forced to use `#ifdef`s, some code cribbed from a Microsoft demo
+to sum CPU time over multiple threads under Windows
+and Visual Studio, and `clock()` from `time.h` under `*NIX` and `g++`.
+
 
 ## 2. Compiling the Code
 

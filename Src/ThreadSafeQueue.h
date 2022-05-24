@@ -35,7 +35,7 @@
 /// \brief Thread safe queue.
 ///
 /// A thread-safe queue of task descriptors for communicating between the
-/// worker threads and the main thread. It uses an `std::mutex` for safety.
+/// threads and the thread manager. It uses an `std::mutex` for safety.
 /// \tparam CTaskClass Task descriptor.
 
 template <class CTaskClass>
@@ -51,8 +51,6 @@ class CThreadSafeQueue{
     void Insert(const CTaskClass& element); ///< Insert task at tail.
     bool Delete(CTaskClass& element); ///< Delete task from head.
     void Flush(); ///< Flush out and discard all tasks in queue.
-
-    const size_t GetSize() const; ///< Get number of tasks.
 }; //CThreadSafeQueue
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -120,20 +118,5 @@ void CThreadSafeQueue<CTaskClass>::Flush(){
   
   m_stdMutex.unlock();
 } //Flush
-
-/// Reader function for the queue size.
-/// \tparam CTaskClass Task descriptor.
-/// \return The queue size.
-
-template <class CTaskClass>
-const size_t CThreadSafeQueue<CTaskClass>::GetSize() const{
-  size_t nSize = 0; //for the size
-  
-  m_stdMutex.lock();
-  nSize = m_stdQueue.size();
-  m_stdMutex.unlock();
-
-  return nSize;
-} //GetSize
 
 #endif //__ThreadSafeQueue_h__

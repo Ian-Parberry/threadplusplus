@@ -25,7 +25,7 @@
 
 #include "BaseTask.h"
 
-size_t CBaseTask::m_nNumTasks = 0; ///< Number of tasks
+std::atomic<size_t> CBaseTask::m_nNumTasks{0}; ///< Number of tasks
 
 /// The default constructor.
 

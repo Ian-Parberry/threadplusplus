@@ -27,6 +27,7 @@
 #define __BaseTask_h_
 
 #include <limits>
+#include <atomic>
 
 constexpr size_t max_size_t = std::numeric_limits<size_t>::max(); ///< Max size_t.
 
@@ -34,14 +35,25 @@ constexpr size_t max_size_t = std::numeric_limits<size_t>::max(); ///< Max size_
 ///
 /// The base task descriptor describes a base task, including a task
 /// identifier, a thread identifier which is to be set by the thread that
-/// performs this task, and a function to perform it. You should derive your
-/// task desciptor from this class. Your task descriptor should implement a
-/// constructor for any task-related initialization and it should override
-/// function Perform() with the code to perform your task.
+/// performs this task, and a function to perform the task. You should derive
+/// your task desciptor from this class. 
+///
+/// Your task descriptor should implement a constructor for any task-related
+/// initialization and it should override function Perform() with the code to
+/// perform your task. Each task descriptor you instantiate will automatically 
+/// get a unique task identifier m_nTaskId which can be read using GetTaskId().
+/// This is maintained using a private static atomic member variable 
+/// m_nNumTasks that is incremented and copied to m_nTaskId by the CBaseTask
+/// constructor. It is recommended that you do not interfere with this process.
+/// You are responsible for setting the thread identifier by calling
+/// SetThreadId() when this task descriptor is assigned to a thread. The thread
+/// identifier can be read later by calling GetThreadId(). The task and thread
+/// identifiers are there for debugging purposes and do not impose a 
+/// significant load on time or memory requirements.
 
 class CBaseTask{
   private:
-    static size_t m_nNumTasks; ///< Number of tasks extant.
+    static std::atomic<size_t> m_nNumTasks; ///< Number of tasks extant.
 
   protected:
     size_t m_nTaskId = 0; ///< Task identifier.
