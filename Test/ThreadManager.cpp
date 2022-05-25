@@ -24,21 +24,26 @@
 // DEALINGS IN THE SOFTWARE.
 
 #include <functional>
-#include <stdio.h>
+#include <iostream>
 
 #include "ThreadManager.h"
 
-/// Default constructor.
+/// Default constructor. All this does is call the `CBaseThreadManager`
+/// default constructor. If you have any initialization code, then it should
+/// go here.
 
 CThreadManager::CThreadManager(): CBaseThreadManager(){
 } //constructor
 
-/// Report a result.
-/// \param pTask Pointer to a task.
+/// Overrides the virtual function `CBaseThreadManager::ProcessTask()` in order
+/// to process the results stored in the completed task descriptor. In this
+/// case it means printing to the console a list of a task identifiers and
+/// the thread identifier of the thread that completed each task. Your task
+/// processing code should go here instead.
+/// \param pTask Pointer to a task descriptor.
 
 void CThreadManager::ProcessTask(CTask* pTask){
-  if(pTask)
-    printf("Task %zd was performed by thread %zd\n",
-      pTask->GetTaskId(), pTask->GetThreadId());
-} //Process
-
+  if(pTask) //safety
+    std::cout << "Task " << pTask->GetTaskId() <<
+      " performed by thread " << pTask->GetThreadId() << std::endl; 
+} //ProcessTask

@@ -26,14 +26,16 @@
 #ifndef __ThreadManager_h__
 #define __ThreadManager_h__
 
-#include <thread>
-
 #include "BaseThreadManager.h"
 #include "Task.h"
 
 /// \brief Thread manager.
 ///
 /// The thread manager takes care of the health and feeding of the threads.
+/// It is derived from `CBaseThreadManager<CTask>`. It has a function
+/// `CThreadManager::ProcessTask()` which overrides the virtual function
+/// `CBaseThreadManager::ProcessTask()` in order to process the results stored
+/// in the completed task descriptor.
 
 class CThreadManager: public CBaseThreadManager<CTask>{
   protected:

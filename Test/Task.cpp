@@ -23,17 +23,22 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#include <stdio.h>
+#include <chrono>
+#include <thread>
 
 #include "Task.h"
 
-/// Constructor.
+/// Default constructor. All this does is call the `CBaseTask` default
+/// constructor. If you have any initialization code, then it should go here.
 
 CTask::CTask(): CBaseTask(){
 } //constructor
 
-/// Perform this task.
+/// Perform this task. This function overrides `CBaseTask::Perform()`. The
+/// task described here is merely to wait a short period of time. Your task
+/// code should go here instead.
 
-void CTask::Perform(){ 
-  printf("Task %zu being performed by thread %zu.\n", m_nTaskId, m_nThreadId);
+void CTask::Perform(){
+  const size_t delay = 400*(m_nThreadId + 1);
+  std::this_thread::sleep_for(std::chrono::milliseconds(delay));
 } //Perform

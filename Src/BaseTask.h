@@ -23,8 +23,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#ifndef __BaseTask_h_
-#define __BaseTask_h_
+#ifndef __BaseTask_h__
+#define __BaseTask_h__
 
 #include <limits>
 #include <atomic>
@@ -70,4 +70,4 @@ class CBaseTask{
     const size_t GetThreadId() const; ///< Get thread identifier.
 }; //CBaseTask
 
-#endif //__BaseTask_h_
+#endif //__BaseTask_h__

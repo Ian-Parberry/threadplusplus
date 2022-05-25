@@ -23,8 +23,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#ifndef __Common_h_
-#define __Common_h_
+#ifndef __Common_h__
+#define __Common_h__
 
 #include "ThreadSafeQueue.h"
 
@@ -57,4 +57,4 @@ CThreadSafeQueue<CTaskClass*> CCommon<CTaskClass>::m_qResult; ///< Result queue.
 template <class CTaskClass>
 bool CCommon<CTaskClass>::m_bForceExit = false; ///< Force exit flag.
 
-#endif //__Common_h_
+#endif //__Common_h__

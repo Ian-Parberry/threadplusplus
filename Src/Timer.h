@@ -23,8 +23,8 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#ifndef _Timer_
-#define _Timer_
+#ifndef __Timer_h__
+#define __Timer_h__
 
 #include <ctime>
 #include <chrono>
@@ -37,7 +37,6 @@ typedef std::chrono::time_point
   <std::chrono::system_clock> systime_point; ///< Shorthand for sysclock time point.
 
 const std::string CommaSeparatedString(const size_t); ///< Comma separated string.
-const std::string to_string(const float, const size_t); ///< Float to string.
 
 /// \brief Timer for elapsed time and CPU time.
 ///
@@ -60,7 +59,7 @@ class CTimer{
   public:
     CTimer(); ///< Constructor.
     
-    const std::string GetCurrentDateAndTime() const; ///< Get current time and date.
+    const std::string GetTimeAndDate() const; ///< Get current time and date.
 
     void Start(); ///< Start timing.
     
@@ -68,4 +67,4 @@ class CTimer{
     const std::string GetCPUTime() const; ///< Get CPU time in seconds.
 }; //CTimer
 
-#endif
+#endif //__Timer_h__

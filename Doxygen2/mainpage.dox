@@ -1,0 +1,28 @@
+/**
+
+\mainpage Thread++ Test Example
+
+## 1. Introduction
+
+This project consists of a task descriptor `CTask` derived from `CBaseTask` and a
+thread manager `CThreadManager` derived from `CBaseThreadManager`<CTask>,
+together with a main() function in Main.cpp which does the following.
+
+1. Create a thread manager and a timer, that is, an instance of `CThreadManager` and an instance of `CTimer`. 
+2. Add some empty task descriptors to the task manager. These are instances of `CTask` that describe a task that involves sleeping for a certain amount of time.
+3. Start the timer.
+4. Report current data and time, and the number of available threads to the console (for example, the first 2 lines of \ref fig1 "Fig. 1"). 
+5. Spawn the threads and wait for them to terminate.
+6. Use the timer to report current time, elapsed time, and CPU time to the console (for example, lines 3-5 of \ref fig1 "Fig. 1").
+7. Have the thread manager process the results. A list of task identifiers and the thread identifier of the thread that processed them is reported to the console (for example, lines 6-21 of \ref fig1 "Fig. 1").
+8. Clean up and exit.
+
+\anchor fig1
+\image html sshot.png "Fig. 1: Screen shot of test run using 4 concurrent threads." width=50%
+
+## 2. Compiling the Code
+
+### For Windows Users:
+A Visual Studio solution file `threadplusplus.sln` has been provided in the root folder. It has been tested with Visual Studio 2019 Community under Windows 10.
+
+**/

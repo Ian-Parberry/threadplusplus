@@ -188,9 +188,9 @@ const std::string CTimer::GetDateAndTime(const systime_point p) const{
 /// the heavy lifting.
 /// \return Current date and time string.
 
-const std::string CTimer::GetCurrentDateAndTime() const{
+const std::string CTimer::GetTimeAndDate() const{
   return GetDateAndTime(sysclock::now());
-} //GetCurrentDateAndTime
+} //GetTimeAndDate
 
 /// Get the amount of time elapsed since the timer was started.
 /// \return Elapsed time.

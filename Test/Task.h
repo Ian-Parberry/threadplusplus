@@ -23,14 +23,16 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
-#ifndef __Task_h_
-#define __Task_h_
+#ifndef __Task_h__
+#define __Task_h__
 
 #include "BaseTask.h"
 
 /// \brief Task.
 ///
-/// Describes a  task.
+/// This task descriptor, derived from `CBaseTask`, overrides the 
+/// `CBaseTask::Process()` function. The task described is merely to wait a
+/// short period of time. Your task processing code should go there.
 
 class CTask: public CBaseTask{
   public:
@@ -39,4 +41,4 @@ class CTask: public CBaseTask{
     virtual void Perform(); ///< Perform the task.
 }; //CTask
 
-#endif //__Task_h_
+#endif //__Task_h__

@@ -23,33 +23,41 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+#include <iostream>
+
 #include "ThreadManager.h"
 #include "Task.h"
 #include "Timer.h"
 
 /// \brief Main.
 ///
-/// Main.
+/// Create a thread manager and a timer. Add some empty tasks to the
+/// task manager. Start the timer. Report current data and time, and the
+/// number of available threads. Spawn the threads and wait for them to
+/// terminate. Use the timer to report current time, elapsed time, and
+/// CPU time, then have the thread manager process the results.
 /// \return 0 (What could possibly go wrong?)
 
 int main(){
   CThreadManager* pThreadManager = new CThreadManager; //thread manager
   CTimer* pTimer = new CTimer; //timer for elapsed and CPU time
 
-  for(size_t i=0; i<100; i++) //create 100 tasks
+  for(size_t i=0; i<16; i++) //create empty tasks
     pThreadManager->Insert(new CTask);
 
   pTimer->Start(); //start timing CPU and elapsed time
-  printf("Starting at %s.\n", pTimer->GetCurrentDateAndTime().c_str());
+
+  std::cout << "Start " << pTimer->GetTimeAndDate() << std::endl;
+  std::cout << pThreadManager->GetNumThreads() << " threads" << std::endl;
+  std::cout << std::flush;
 
   pThreadManager->Spawn(); //spawn threads
   pThreadManager->Wait(); //wait for threads to finish
   
-  printf("Finishing at %s.\n", pTimer->GetCurrentDateAndTime().c_str());
-  printf("Elapsed time %s.\n", pTimer->GetElapsedTime().c_str());
-  printf("CPU time %s.\n", pTimer->GetCPUTime().c_str());
+  std::cout << "Finish " << pTimer->GetTimeAndDate() << std::endl;
+  std::cout << "Elapsed time " << pTimer->GetElapsedTime() << std::endl;
+  std::cout << "CPU time " << pTimer->GetCPUTime() << std::endl;
 
-  printf("Processing results computed by threads.\n");
   pThreadManager->Process(); //process results
 
   //clean up and exit
