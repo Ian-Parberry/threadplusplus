@@ -36,8 +36,6 @@ typedef std::chrono::system_clock sysclock; ///< Shorthand for system clock.
 typedef std::chrono::time_point
   <std::chrono::system_clock> systime_point; ///< Shorthand for sysclock time point.
 
-const std::string CommaSeparatedString(const size_t); ///< Comma separated string.
-
 /// \brief Timer for elapsed time and CPU time.
 ///
 /// The timer is charged with everything that is time-related, in particular,
@@ -54,7 +52,7 @@ class CTimer{
     const uint64_t CPUTime() const; ///< Compute CPU time.
     const std::string TimeString(float seconds, size_t n) const; ///< Time as a string.
 
-    const std::string GetDateAndTime(const systime_point) const; ///< Get date and time.
+    const std::string GetTimeAndDate(const systime_point) const; ///< Get date and time.
 
   public:
     CTimer(); ///< Constructor.
@@ -66,5 +64,25 @@ class CTimer{
     const std::string GetElapsedTime() const; ///< Get elapsed time in seconds.
     const std::string GetCPUTime() const; ///< Get CPU time in seconds.
 }; //CTimer
+
+///////////////////////////////////////////////////////////////////////////////
+// Templated helper functions.
+
+/// Convert a number to an `std::string` and insert commas every three 
+/// digits from the least-significant end.
+/// \tparam t Type of number.
+/// \param n The number to be converted.
+/// \return The number as a comma-separated string.
+
+template<typename t>
+const std::string CommaSeparatedString(const t n){ 
+  std::string s = std::to_string(n); //string for comma-separated number
+  const int nStart = (int)s.length() - 3; //position of first comma
+
+  for(int i=nStart; i>0; i-=3) //every third character
+    s.insert(i, ","); //insert a comma
+
+  return s;
+} //CommaSeparatedString
 
 #endif //__Timer_h__

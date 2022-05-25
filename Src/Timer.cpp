@@ -36,21 +36,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 // Helper functions.
 
-/// Convert a number to an `std::string` and insert commas every three 
-/// digits from the least-significant end.
-/// \param n The number to be converted.
-/// \return The number as a comma-separated string.
-
-const std::string CommaSeparatedString(const size_t n){ 
-  std::string s = std::to_string(n); //string for comma-separated number
-  const int nStart = (int)s.length() - 3; //position of first comma
-
-  for(int i=nStart; i>0; i-=3) //every third character
-    s.insert(i, ","); //insert a comma
-
-  return s;
-} //CommaSeparatedString
-
 /// Convert float to a fixed-precision string without trailing zeros.
 /// Unfortunately, `std::to_string` does not have a way to limit precision,
 /// so we'll have to get creative with `std::ostringstream` instead.
@@ -178,18 +163,18 @@ void CTimer::Start(){
 /// \param p An instance of systime_point.
 /// \return The corresponding time and date string.
 
-const std::string CTimer::GetDateAndTime(const systime_point p) const{
+const std::string CTimer::GetTimeAndDate(const systime_point p) const{
   const time_t t = sysclock::to_time_t(p);
   const std::string s = ctime(&t);
   return s.substr(0, s.length() - 1);
-} //GetDateAndTime
+} //GetTimeAndDate
 
 /// Get the current date and time as a string. Uses `GetDateAndTime()` to do
 /// the heavy lifting.
 /// \return Current date and time string.
 
 const std::string CTimer::GetTimeAndDate() const{
-  return GetDateAndTime(sysclock::now());
+  return GetTimeAndDate(sysclock::now());
 } //GetTimeAndDate
 
 /// Get the amount of time elapsed since the timer was started.
