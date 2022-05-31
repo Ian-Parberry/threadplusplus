@@ -109,30 +109,35 @@ typedef std::chrono::time_point&lt; std::chrono::system_clock &gt;&#160;</td><td
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ac73d649c3b1e2f1ab684df95d7e2cf85"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_timer_8h.html#ac73d649c3b1e2f1ab684df95d7e2cf85">CommaSeparatedString</a> (const size_t)</td></tr>
-<tr class="memdesc:ac73d649c3b1e2f1ab684df95d7e2cf85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Comma separated string.  <a href="_timer_8h.html#ac73d649c3b1e2f1ab684df95d7e2cf85">More...</a><br /></td></tr>
-<tr class="separator:ac73d649c3b1e2f1ab684df95d7e2cf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a55b33e119aeb0127040b434ff79ef56e"><td class="memItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_timer_8h.html#a55b33e119aeb0127040b434ff79ef56e">to_string</a> (const float, const size_t)</td></tr>
-<tr class="memdesc:a55b33e119aeb0127040b434ff79ef56e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Float to string.  <a href="_timer_8h.html#a55b33e119aeb0127040b434ff79ef56e">More...</a><br /></td></tr>
-<tr class="separator:a55b33e119aeb0127040b434ff79ef56e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a007e5caa3caf5d8b02edb7b945b08b9c"><td class="memTemplParams" colspan="2">template&lt;typename t &gt; </td></tr>
+<tr class="memitem:a007e5caa3caf5d8b02edb7b945b08b9c"><td class="memTemplItemLeft" align="right" valign="top">const std::string&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_timer_8h.html#a007e5caa3caf5d8b02edb7b945b08b9c">CommaSeparatedString</a> (const t n)</td></tr>
+<tr class="separator:a007e5caa3caf5d8b02edb7b945b08b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ac73d649c3b1e2f1ab684df95d7e2cf85" name="ac73d649c3b1e2f1ab684df95d7e2cf85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac73d649c3b1e2f1ab684df95d7e2cf85">&#9670;&nbsp;</a></span>CommaSeparatedString()</h2>
+<a id="a007e5caa3caf5d8b02edb7b945b08b9c" name="a007e5caa3caf5d8b02edb7b945b08b9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a007e5caa3caf5d8b02edb7b945b08b9c">&#9670;&nbsp;</a></span>CommaSeparatedString()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<div class="memtemplate">
+template&lt;typename t &gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">const std::string CommaSeparatedString </td>
           <td>(</td>
-          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramtype">const t&#160;</td>
           <td class="paramname"><em>n</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p >Convert a number to an <code>std::string</code> and insert commas every three digits from the least-significant end. </p><dl class="params"><dt>Parameters</dt><dd>
+<p >Convert a number to an <code>std::string</code> and insert commas every three digits from the least-significant end. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">t</td><td>Type of number. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">n</td><td>The number to be converted. </td></tr>
   </table>
@@ -142,46 +147,10 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="a55b33e119aeb0127040b434ff79ef56e" name="a55b33e119aeb0127040b434ff79ef56e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55b33e119aeb0127040b434ff79ef56e">&#9670;&nbsp;</a></span>to_string()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const std::string to_string </td>
-          <td>(</td>
-          <td class="paramtype">const float&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const size_t&#160;</td>
-          <td class="paramname"><em>n</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<p >Convert float to a fixed-precision string without trailing zeros. Unfortunately, <code>std::to_string</code> does not have a way to limit precision, so we'll have to get creative with <code>std::ostringstream</code> instead. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">x</td><td>Floating point number </td></tr>
-    <tr><td class="paramname">n</td><td>Maximum number of digits after the decimal. </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>Fixed-precision string with no trailing zeros. </dd></dl>
-
-</div>
-</div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 24 2022 16:26:33 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
+Generated on Tue May 31 2022 16:40:26 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
 </small></address>
 </body>
 </html>

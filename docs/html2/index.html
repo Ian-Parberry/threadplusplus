@@ -74,11 +74,10 @@ $(function() {
   <div class="headertitle"><div class="title">Thread++ Test Example </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2>1. Introduction</h2>
-<p >This project consists of a task descriptor <code><a class="el" href="class_c_task.html" title="Task.">CTask</a></code> derived from <code>CBaseTask</code> and a thread manager <code><a class="el" href="class_c_thread_manager.html" title="Thread manager.">CThreadManager</a></code> derived from <code>CBaseThreadManager</code>&lt;CTask&gt;, together with a <a class="el" href="_main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Main.">main()</a> function in <a class="el" href="_main_8cpp.html" title="Code for the function main().">Main.cpp</a> which does the following.</p>
+<div class="textblock"><p >This is a sample test program for <a href="..\html\index.html">threadplusplus</a>. As described in <a href="..\html\index.html#sec4point2">Section 4 of the threadplusplus documentation</a>, it consists of a task descriptor <a class="el" href="class_c_task.html" title="Task.">CTask</a> derived from <code>CBaseTask</code>, a thread manager <a class="el" href="class_c_thread_manager.html" title="Thread manager.">CThreadManager</a> derived from <code>CBaseThreadManager&lt;CTask&gt;</code>, and a <a class="el" href="_main_8cpp.html#ae66f6b31b5ad750f1fe042a706a4e3d4" title="Main.">main()</a> function in <a class="el" href="_main_8cpp.html" title="Code for the function main().">Main.cpp</a> which does the following.</p>
 <ol type="1">
 <li>Create a thread manager and a timer, that is, an instance of <code><a class="el" href="class_c_thread_manager.html" title="Thread manager.">CThreadManager</a></code> and an instance of <code>CTimer</code>.</li>
-<li>Add some empty task descriptors to the task manager. These are instances of <code><a class="el" href="class_c_task.html" title="Task.">CTask</a></code> that describe a task that involves sleeping for a certain amount of time.</li>
+<li>Add some task descriptors to the task manager. These are instances of <code><a class="el" href="class_c_task.html" title="Task.">CTask</a></code> that describe a task that involves sleeping for a certain amount of time.</li>
 <li>Start the timer.</li>
 <li>Report current data and time, and the number of available threads to the console (for example, the first 2 lines of <a class="el" href="index.html#fig1">Fig. 1</a>).</li>
 <li>Spawn the threads and wait for them to terminate.</li>
@@ -89,15 +88,12 @@ $(function() {
 <p ><a class="anchor" id="fig1"></a></p><div class="image">
 <img src="sshot.png" alt="" width="50%"/>
 <div class="caption">
-Fig. 1: Screen shot of test run using 4 concurrent threads.</div></div>
-<h2>2. Compiling the Code</h2>
-<h3>For Windows Users:</h3>
-<p >A Visual Studio solution file <code>threadplusplus.sln</code> has been provided in the root folder. It has been tested with Visual Studio 2019 Community under Windows 10. </p>
-</div></div><!-- PageDoc -->
+Fig. 1: Screen shot of a test run using 4 concurrent threads.</div></div>
+ </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed May 25 2022 15:37:00 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
+Generated on Tue May 31 2022 15:15:08 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
 </small></address>
 </body>
 </html>

@@ -2,14 +2,16 @@
 
 \mainpage Thread++ Test Example
 
-## 1. Introduction
-
-This project consists of a task descriptor `CTask` derived from `CBaseTask` and a
-thread manager `CThreadManager` derived from `CBaseThreadManager`<CTask>,
-together with a main() function in Main.cpp which does the following.
+This is a sample test program for 
+[threadplusplus](..\html\index.html).
+As described in [Section 4 of the threadplusplus documentation](..\html\index.html#sec4point2),
+it consists of
+a task descriptor CTask derived from <tt>CBaseTask</tt>, a
+thread manager CThreadManager derived from <tt>CBaseThreadManager<CTask></tt>,
+and a main() function in Main.cpp which does the following.
 
 1. Create a thread manager and a timer, that is, an instance of `CThreadManager` and an instance of `CTimer`. 
-2. Add some empty task descriptors to the task manager. These are instances of `CTask` that describe a task that involves sleeping for a certain amount of time.
+2. Add some task descriptors to the task manager. These are instances of `CTask` that describe a task that involves sleeping for a certain amount of time.
 3. Start the timer.
 4. Report current data and time, and the number of available threads to the console (for example, the first 2 lines of \ref fig1 "Fig. 1"). 
 5. Spawn the threads and wait for them to terminate.
@@ -18,11 +20,6 @@ together with a main() function in Main.cpp which does the following.
 8. Clean up and exit.
 
 \anchor fig1
-\image html sshot.png "Fig. 1: Screen shot of test run using 4 concurrent threads." width=50%
-
-## 2. Compiling the Code
-
-### For Windows Users:
-A Visual Studio solution file `threadplusplus.sln` has been provided in the root folder. It has been tested with Visual Studio 2019 Community under Windows 10.
+\image html sshot.png "Fig. 1: Screen shot of a test run using 4 concurrent threads." width=50%
 
 **/
