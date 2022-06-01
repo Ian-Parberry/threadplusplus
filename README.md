@@ -2,7 +2,7 @@
 
 The source code for this project, written and maintained by
 [Ian Parberry](http://ianparberry.com), is intended to be used by students to
-extend and modifye. See 
+extend and modify. See 
 [https://ian-parberry.github.io/threadplusplus/](https://ian-parberry.github.io/threadplusplus/)
 for code documentation.
 
