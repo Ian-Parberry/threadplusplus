@@ -78,8 +78,11 @@ $(function() {
 <p >This code provides object-oriented multi-threading support for computation-heavy tasks such as backtracking or exhaustive search. In order to take advantage of the potential speedup offered by multi-threading, your computation must be capable of being broken up into parts that can be performed independently in parallel.</p>
 <p >The remainder of this page is divided into four sections. <a class="el" href="index.html#sec2">Section 2</a> describes how to compile the code, which is probably the first thing you should do. <a class="el" href="index.html#sec3">Section 3</a> drills down into the code, which is important to read before you go about incorporating it into your own project. <a class="el" href="index.html#sec4">Section 4</a> summarizes what this code provides and what you must provide, just to make sure that we are both on the same page. <a class="el" href="index.html#sec5">Section 5</a> describes what you need to do to use this code in your own project.</p>
 <p ><a class="anchor" id="sec2"></a></p><h2>2. Compiling the Code</h2>
-<h3>For Windows Users:</h3>
+<p ><a class="anchor" id="sec2point1"></a></p><h3>2.1 Windows and Visual Studio</h3>
 <p >A Visual Studio solution file <code>threadplusplus.sln</code> has been provided in the root folder. It has been tested with Visual Studio 2019 Community under Windows 10 in both <code>Debug</code> and <code>Release</code> configurations on the <code>x64</code> and <code>x86</code> platforms. It consists of two projects, <code>threadplusplus</code> and <code>Test</code>. Project <code>threadplusplus</code> compiles into a library file <code>threadplusplus.lib</code>. Project <code>Test</code> compiles into a test executable <code>Test.exe</code> described in more detail <a href="..\html2\index.html">in this documentation</a>.</p>
+<p ><a class="anchor" id="sec2point2"></a></p><h3>2.2 *NIX and g++</h3>
+<p >There is a <code>makefile</code> for the <code>threadplusplus</code> library in directory <code>Src</code>. From the root folder (the one with <code>threadplusplus.sln</code>), type <code>cd Src</code> followed by <code>make all</code>, then <code>make cleanup</code>. You should now see the library file <code>threadplusplus.a</code>.</p>
+<p >There is a <code>makefile</code> for the <code>Test</code> program in directory <code>Test</code>. From the root folder (the one with <code>threadplusplus.sln</code>), type <code>cd Test</code> followed by <code>make all</code>. You should now see the executable file <code>Test</code>. Run it by typing <code>./Test</code>.</p>
 <p ><a class="anchor" id="sec3"></a></p><h2>3. Drilling Down Into the Code</h2>
 <p >In order to take full advantage of the potential speedup offered by multi-threading, your computation must be broken up into a reasonable number of parts (ideally between 10 and 1000) that can be performed independently in parallel. We will call these <em>tasks</em>. Each task is described in a <em>task</em> <em>descriptor</em> that includes the data that specifies the task, the code for performing the task, and space for its result (see <a class="el" href="index.html#sec3point1">Section 3.1</a>).</p>
 <p >Newly created task descriptors are inserted into a thread-safe (see <a class="el" href="index.html#sec3point2">Section 3.2</a>) <em>request</em> <em>queue</em> from which the threads will take them, perform the task described, and insert the completed task descriptor with its result into a thread-safe <em>result</em> <em>queue</em>. The request queue and the result queue are shared between objects using a monostate class <a class="el" href="class_c_common.html" title="Common.">CCommon</a> (see <a class="el" href="index.html#sec3point3">Section 3.3</a>). The computation as a whole is managed by a <em>thread</em> <em>manager</em> (see <a class="el" href="index.html#sec3point4">Section 3.4</a>) which creates and inserts task descriptors into the request queue, initiates the threads (see <a class="el" href="index.html#sec3point5">Section 3.5</a>), waits until all threads terminate, then processes the completed task requests from the result queue.</p>
@@ -116,7 +119,20 @@ Fig. 3: Threads perform the tasks from the request queue and transfer the comple
 <div class="caption">
 Fig. 4: The thread manager sequentially processes the completed task descriptors from the result queue.</div></div>
 <p ><a class="anchor" id="sec3point5"></a></p><h3>3.5 The Threads</h3>
-<p >The thread class <a class="el" href="class_c_thread.html" title="The thread class.">CThread</a> consists of a loop in which a task descriptor (see <a class="el" href="index.html#sec3point1">Section 3.1</a>) is deleted from the thread-safe request queue (see <a class="el" href="index.html#sec3point2">Section 3.2</a>) inherited from <a class="el" href="class_c_common.html" title="Common.">CCommon</a> (see <a class="el" href="index.html#sec3point3">Section 3.3</a>), the task described in the task descriptor is performed by calling your task descriptor's function overriding <a class="el" href="class_c_base_task.html#a7a45808d0356031760702d7376cf55bd" title="Perform this task.">CBaseTask::Perform()</a>, and the completed task descriptor is inserted into the thread-safe result queue(see <a class="el" href="index.html#sec3point2">Section 3.2</a>), also inherited from <a class="el" href="class_c_common.html" title="Common.">CCommon</a> (see <a class="el" href="index.html#sec3point3">Section 3.3</a>). The loop exits when either the request queue is empty (<a class="el" href="class_c_thread_safe_queue.html#ac00956af0cc3398b95f106099ed2ab5b" title="Delete task from head.">CThreadSafeQueue::Delete()</a> returns <code>false</code>) or the shared Boolean variable <a class="el" href="class_c_common.html#a8374f04015b722848944a92365959e39" title="Force exit flag.">CCommon::m_bForceExit</a> is set to <code>true</code>, at which time the thread terminates.</p>
+<p >The thread class <a class="el" href="class_c_thread.html" title="The thread class.">CThread</a> provides a constructor that assigns a thread identifier and an implementation of <code>operator()</code> containing the code to be executed by the thread. This code consists of a loop whose body consists of the following:</p>
+<ol>
+<li>
+<p class="startli">A pointer to a task descriptor (see <a class="el" href="index.html#sec3point1">Section 3.1</a>) is deleted from the thread-safe request queue (see <a class="el" href="index.html#sec3point2">Section 3.2</a>) inherited from <a class="el" href="class_c_common.html" title="Common.">CCommon</a> (see <a class="el" href="index.html#sec3point3">Section 3.3</a>). </p>
+<p class="endli"></p>
+</li>
+<li>
+<p class="startli">The task described in the task descriptor is performed by calling the task descriptor's function overriding <a class="el" href="class_c_base_task.html#a7a45808d0356031760702d7376cf55bd" title="Perform this task.">CBaseTask::Perform()</a>. </p>
+<p class="endli"></p>
+</li>
+<li>
+A pointer to the completed task descriptor is inserted into the thread-safe result queue (see <a class="el" href="index.html#sec3point2">Section 3.2</a>), also inherited from <a class="el" href="class_c_common.html" title="Common.">CCommon</a> (see <a class="el" href="index.html#sec3point3">Section 3.3</a>).  </li>
+</ol>
+<p >The loop exits when either the request queue is empty (<a class="el" href="class_c_thread_safe_queue.html#ac00956af0cc3398b95f106099ed2ab5b" title="Delete task from head.">CThreadSafeQueue::Delete()</a> returns <code>false</code>) or the shared Boolean variable <a class="el" href="class_c_common.html#a8374f04015b722848944a92365959e39" title="Force exit flag.">CCommon::m_bForceExit</a> is set to <code>true</code>, at which time the thread terminates.</p>
 <p ><a class="anchor" id="sec3point6"></a></p><h3>3.6 The Timer</h3>
 <p >Assuming that you will be using this code for backtracking or exhaustive search, you will also be interested in measuring the CPU time used over the whole computation, summed over all of the threads, and the elapsed time. The elapsed time should ideally be the CPU time divided by the number of threads, but this assumes that you have made good decisions about how your tasks should be parallelized.</p>
 <p >The timer class <a class="el" href="class_c_timer.html" title="Timer for elapsed time and CPU time.">CTimer</a> has a start function <a class="el" href="class_c_timer.html#a4c95a1f25b3ef73436d4876260a2e013" title="Start timing.">CTimer::Start()</a> that should be called from your code when you want to start measuring time, leaving the decision over whether to measure initialization time completely up to you. The main functions of interest are CTimer::GetCurrentDateAndTime() which returns the current date and time as an <code>std::string</code>, and <a class="el" href="class_c_timer.html#aae0fc25f21522d40a80fcf1417b64212" title="Get elapsed time in seconds.">CTimer::GetElapsedTime()</a> and <a class="el" href="class_c_timer.html#ad68def9a42e484e50f9136fea7ac8436" title="Get CPU time in seconds.">CTimer::GetCPUTime()</a> which return, respectively, the elapsed and CPU time as pretty-printed <code>std::string</code>s. It's up to you to instantiate an instance of <a class="el" href="class_c_timer.html" title="Timer for elapsed time and CPU time.">CTimer</a> in your code, make the appropriate function calls, and output the resulting strings to the console or to a file using, for example, <code>std::iostream</code>, <code>std::fstream</code>, or <code>stdio</code>.</p>
@@ -133,16 +149,16 @@ Fig. 4: The thread manager sequentially processes the completed task descriptors
 </ol>
 <p ><a class="anchor" id="sec4point2"></a></p><h3>4.2 What You Must Provide</h3>
 <ol type="1">
-<li>A task descriptor <code>CTask</code> derived from <a class="el" href="class_c_base_task.html" title="Base task descriptor.">CBaseTask</a> with member variables that specify the task to be performed and a member function <code>CTask::Perform()</code> to override <a class="el" href="class_c_base_task.html#a7a45808d0356031760702d7376cf55bd" title="Perform this task.">CBaseTask::Perform()</a> containing code to perform your task based on the task specified in its member variables. Note that <code>CTask::Perform()</code> must not have any parameters.</li>
+<li>A task descriptor <code>CTask</code> derived from <a class="el" href="class_c_base_task.html" title="Base task descriptor.">CBaseTask</a> with member variables that specify the task to be performed and a member function <code>CTask::Perform()</code> to override <a class="el" href="class_c_base_task.html#a7a45808d0356031760702d7376cf55bd" title="Perform this task.">CBaseTask::Perform()</a> containing code to perform your task as specified in its member variables.</li>
 <li>A thread manager <code>CThreadManager</code> derived from <a class="el" href="class_c_base_thread_manager.html" title="The base thread manager.">CBaseThreadManager</a> <code>&lt;CTask&gt;</code>. It must contain, in addition to a constructor that calls the <a class="el" href="class_c_base_thread_manager.html" title="The base thread manager.">CBaseThreadManager</a> constructor, a function <code>CThreadManager::ProcessTask(CTask*)</code> that overrides <code>CBaseThreadManager::ProcessTask(CBaseTask*)</code> with code that processes the results of your task pointed to by its single parameter.</li>
 <li>A <code>main()</code> that instantiates an instance of <code>CThreadManager</code> and an instance of <a class="el" href="class_c_timer.html" title="Timer for elapsed time and CPU time.">CTimer</a> (if required). It then creates the required instances of <code>CTask</code> and calls the thread manager's <code>Insert()</code> function to insert them into the request queue. Next, it starts the timer (if required) by calling <code><a class="el" href="class_c_timer.html#a4c95a1f25b3ef73436d4876260a2e013" title="Start timing.">CTimer::Start()</a></code>. This line of code may be omitted if initialization is to be included in the time reported. It then calls the thread manager's <code>Spawn()</code> function to spawn the threads and the thread manager's <code>Wait()</code> function to wait for the threads to terminate. When that function returns, the result queue should contain processed task descriptors. Now <code>main()</code> can report CPU time and elapsed time (if required), and finally call the thread managers <code>Process()</code> function to process and report the results of the computation.</li>
 </ol>
 <p >A simple test executable is provided as part of this project (see <a class="el" href="index.html#sec2">Section 2</a>).</p>
 <p ><a class="anchor" id="sec5"></a></p><h2>5. Using This Code</h2>
-<h3>For Windows Users:</h3>
+<p ><a class="anchor" id="sec5point1"></a></p><h3>5.1 Windows and Visual Studio</h3>
 <ol>
 <li>
-<p class="startli">Compile this code in whatever configurations and platforms you require (see <a class="el" href="index.html#sec2">Section 2</a>). </p>
+<p class="startli">Compile this code in whatever configurations and platforms you require (see <a class="el" href="index.html#sec2point1">Section 2.1</a>). </p>
 <p class="endli"></p>
 </li>
 <li>
@@ -182,11 +198,48 @@ Fig. 7: Adding threadplusplus.lib in Visual Studio.</div></div>
 <li>
 Remember to <code>#include</code> <a class="el" href="_base_task_8h.html" title="Header for the class CBaseTask.">BaseTask.h</a>, <a class="el" href="_base_thread_manager_8h.html" title="Header and code for the class CBaseThreadManager.">BaseThreadManager.h</a>, and <code><a class="el" href="_timer_8h.html" title="Header for the class CTimer.">Timer.h</a></code> wherever appropriate in your code.  </li>
 </ol>
+<p ><a class="anchor" id="sec5point2"></a></p><h3>5.2 *NIX and g++</h3>
+<ol>
+<li>
+<p class="startli">Compile this code (see <a class="el" href="index.html#sec2point2">Section 2.2</a>). </p>
+<p class="endli"></p>
+</li>
+<li>
+<p class="startli">Copy the <code>makefile</code> from the <code>Test</code> directory (see <a class="el" href="index.html#sec2">Section 2</a>) to your source code directory. </p>
+<p class="endli"></p>
+</li>
+<li>
+<p class="startli">Edit the copy of the <code>makefile</code> in your source code directory. </p>
+<ol style="list-style-type: lower-alpha">
+<li>
+<p class="startli">Change line 1 to set the <code>SRC</code> variable to your source and header files. </p>
+<p class="endli"></p>
+</li>
+<li>
+<p class="startli">Change line 2 to set the <code>EXE</code> variable to your executable file name. </p>
+<p class="endli"></p>
+</li>
+<li>
+<p class="startli">Change line 3 to set the <code>INC</code> variable to the relative path of the <code>Src</code> folder in this project (currently <code>../Src</code>). </p>
+<p class="endli"></p>
+</li>
+<li>
+<p class="startli">Change line 4 to set the <code>LIB</code> variable to the relative path of the <code>Src</code> folder in this project followed by <code>threadplusplus.a</code> (currently <code>../Src/threadplusplus.a</code>). </p>
+<p class="endli"></p>
+</li>
+<li>
+Save the file.  </li>
+</ol>
+<p class="endli"></p>
+</li>
+<li>
+Type <code>make all</code> to create your executable file.  </li>
+</ol>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 31 2022 16:40:26 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
+Generated on Wed Jun 1 2022 12:15:04 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
 </small></address>
 </body>
 </html>

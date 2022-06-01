@@ -30,6 +30,7 @@
 #include <chrono>
 #include <string>
 #include <cinttypes>
+#include <cstddef>
 
 typedef std::chrono::system_clock sysclock; ///< Shorthand for system clock.
 

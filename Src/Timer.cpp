@@ -24,6 +24,7 @@
 // DEALINGS IN THE SOFTWARE.
 
 #include <sstream>
+#include <cmath>
 
 #include "Timer.h"
 
@@ -98,7 +99,7 @@ const std::string CTimer::TimeString(float fSeconds, size_t n) const{
 
   //number of days
 
-  const size_t nDays = (size_t)floor(fSeconds/SECONDS_PER_DAY);
+  const size_t nDays = (size_t)std::floor(fSeconds/SECONDS_PER_DAY);
   fSeconds -= nDays*SECONDS_PER_DAY;
 
   if(nDays > 0)
@@ -140,7 +141,7 @@ const std::string CTimer::TimeString(float fSeconds, size_t n) const{
   //number of milliseconds when less than 1 second
 
   else if(fSeconds >= 0.001f)
-    s += std::to_string(size_t(std::ceilf(fSeconds*1000.0f))) + " ms";
+    s += std::to_string(size_t(std::ceil(fSeconds*1000.0f))) + " ms";
 
   else s += "< 1 ms"; //less than a millisecond, so whatever
 

@@ -28,6 +28,8 @@
 
 #include <thread>
 #include <functional>
+#include <cstddef>
+#include <algorithm>
 
 #include "ThreadSafeQueue.h"
 #include "Thread.h"

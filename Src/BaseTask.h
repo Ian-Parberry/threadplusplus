@@ -28,6 +28,7 @@
 
 #include <limits>
 #include <atomic>
+#include <cstddef>
 
 constexpr size_t max_size_t = std::numeric_limits<size_t>::max(); ///< Max size_t.
 

@@ -20,7 +20,8 @@ The remainder of this page is divided into four sections.
 \anchor sec2
 ## 2. Compiling the Code
 
-### For Windows Users:
+\anchor sec2point1
+### 2.1 Windows and Visual Studio
 A Visual Studio solution file `threadplusplus.sln` has been provided in the root folder. It has been tested with Visual Studio 2019 Community under Windows 10
 in both `Debug` and `Release` configurations on the `x64` and `x86` platforms.
 It consists of two projects, `threadplusplus` and `Test`.
@@ -28,6 +29,18 @@ Project `threadplusplus` compiles into a library file `threadplusplus.lib`.
 Project `Test` compiles into a test executable `Test.exe`
 described in more detail
 [in this documentation](..\html2\index.html).
+
+\anchor sec2point2
+### 2.2 *NIX and g++
+There is a `makefile` for the `threadplusplus` library in directory `Src`.
+From the root folder (the one with `threadplusplus.sln`), type `cd Src`
+followed by `make all`, then `make cleanup`. You should now see the library file
+`threadplusplus.a`.
+
+There is a `makefile` for the `Test` program in directory `Test`.
+From the root folder (the one with `threadplusplus.sln`), type `cd Test`
+followed by `make all`. You should now see the executable file
+`Test`. Run it by typing `./Test`.
 
 \anchor sec3
 ## 3. Drilling Down Into the Code
@@ -175,15 +188,29 @@ This process is illustrated in \ref fig4 "Fig. 4".
 \anchor sec3point5
 ### 3.5 The Threads
 
-The thread class CThread consists of a loop
-in which a task descriptor (see \ref sec3point1 "Section 3.1") is deleted from the thread-safe
+The thread class CThread provides a constructor that assigns a thread identifier
+and an implementation of `operator()` containing the code to be executed by
+the thread. This code consists of a loop whose body consists of the following:
+
+<ol>
+<li>
+A pointer to a task descriptor (see \ref sec3point1 "Section 3.1") is deleted from the thread-safe
 request queue (see \ref sec3point2 "Section 3.2") 
-inherited from CCommon (see \ref sec3point3 "Section 3.3"),
-the task described in the task descriptor is performed by
-calling your task descriptor's function overriding CBaseTask::Perform(),
-and the completed task descriptor is inserted into the thread-safe result
-queue(see \ref sec3point2 "Section 3.2"), also 
 inherited from CCommon (see \ref sec3point3 "Section 3.3").
+</li>
+
+<li>
+The task described in the task descriptor is performed by
+calling the task descriptor's function overriding CBaseTask::Perform().
+</li>
+
+<li>
+A pointer to the completed task descriptor is inserted into the thread-safe result
+queue (see \ref sec3point2 "Section 3.2"), also 
+inherited from CCommon (see \ref sec3point3 "Section 3.3").
+</li>
+</ol>
+
 The loop exits when either the request queue is empty
 (CThreadSafeQueue::Delete() returns `false`) or the shared
 Boolean variable CCommon::m_bForceExit is set to `true`,
@@ -236,9 +263,7 @@ and \ref sec4point2 "what you must provide" before working with this code.
 
 1. A task descriptor `CTask` derived from CBaseTask with member variables
 that specify the task to be performed and a member function `CTask::Perform()`
-to override CBaseTask::Perform() containing code to perform your task based on
-the task specified in its member variables. Note that `CTask::Perform()` must not
-have any parameters.
+to override CBaseTask::Perform() containing code to perform your task as specified in its member variables.
 
 2. A thread manager `CThreadManager` derived from CBaseThreadManager `<CTask>`.
 It must contain, in addition to a constructor that calls the CBaseThreadManager
@@ -269,12 +294,13 @@ A simple test executable is provided as part of this project
 \anchor sec5
 ## 5. Using This Code
 
-### For Windows Users:
+\anchor sec5point1
+### 5.1 Windows and Visual Studio
 
 <ol>
 <li>
 Compile this code in whatever configurations
-and platforms you require (see \ref sec2 "Section 2").
+and platforms you require (see \ref sec2point1 "Section 2.1").
 </li>
 
 <li>
@@ -319,6 +345,49 @@ In <tt>Linker\\Input</tt>, add <tt>threadplusplus.lib</tt> to <tt>Additional Dep
 <li>
 Remember to <tt>\#include</tt> BaseTask.h, BaseThreadManager.h, and
 <tt>Timer.h</tt> wherever appropriate in your code.
+</li>
+</ol>
+
+\anchor sec5point2
+### 5.2 *NIX and g++
+
+<ol>
+<li>
+Compile this code (see \ref sec2point2 "Section 2.2").
+</li>
+
+<li>
+Copy the `makefile` from the `Test` directory (see \ref sec2 "Section 2") to your source code directory.
+</li>
+
+<li>
+Edit the copy of the `makefile` in your source code directory.
+</li>
+
+<ol style="list-style-type: lower-alpha">
+<li>
+Change line 1 to set the `SRC` variable to your source and header files.
+</li>
+
+<li>
+Change line 2 to set the `EXE` variable to your executable file name.
+</li>
+
+<li>
+Change line 3 to set the `INC` variable to the relative path of the `Src` folder in this project (currently `../Src`).
+</li>
+
+<li>
+Change line 4 to set the `LIB` variable to the relative path of the `Src` folder in this project followed by `threadplusplus.a` (currently `../Src/threadplusplus.a`).
+</li>
+
+<li>
+Save the file.
+</li>
+</ol>
+
+<li>
+Type `make all` to create your executable file.
 </li>
 </ol>
 **/
