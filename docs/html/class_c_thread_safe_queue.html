@@ -82,7 +82,7 @@ $(function() {
 <p>Thread safe queue.  
  <a href="class_c_thread_safe_queue.html#details">More...</a></p>
 
-<p><code>#include &lt;ThreadSafeQueue.h&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="_thread_safe_queue_8h_source.html">ThreadSafeQueue.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -104,13 +104,11 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-attribs" name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:abd18632e7249a4dad11cde9d31c6568f"><td class="memItemLeft" align="right" valign="top"><a id="abd18632e7249a4dad11cde9d31c6568f" name="abd18632e7249a4dad11cde9d31c6568f"></a>
-std::mutex&#160;</td><td class="memItemRight" valign="bottom"><b>m_stdMutex</b></td></tr>
-<tr class="memdesc:abd18632e7249a4dad11cde9d31c6568f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex for thread safety. <br /></td></tr>
+<tr class="memitem:abd18632e7249a4dad11cde9d31c6568f"><td class="memItemLeft" align="right" valign="top">std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_thread_safe_queue.html#abd18632e7249a4dad11cde9d31c6568f">m_stdMutex</a></td></tr>
+<tr class="memdesc:abd18632e7249a4dad11cde9d31c6568f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mutex for thread safety.  <a href="class_c_thread_safe_queue.html#abd18632e7249a4dad11cde9d31c6568f">More...</a><br /></td></tr>
 <tr class="separator:abd18632e7249a4dad11cde9d31c6568f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a78bc86a0f2e9387a40876eb130e0390c"><td class="memItemLeft" align="right" valign="top"><a id="a78bc86a0f2e9387a40876eb130e0390c" name="a78bc86a0f2e9387a40876eb130e0390c"></a>
-std::queue&lt; CTaskClass &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_stdQueue</b></td></tr>
-<tr class="memdesc:a78bc86a0f2e9387a40876eb130e0390c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task descriptor queue. <br /></td></tr>
+<tr class="memitem:a78bc86a0f2e9387a40876eb130e0390c"><td class="memItemLeft" align="right" valign="top">std::queue&lt; CTaskClass &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_thread_safe_queue.html#a78bc86a0f2e9387a40876eb130e0390c">m_stdQueue</a></td></tr>
+<tr class="memdesc:a78bc86a0f2e9387a40876eb130e0390c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The task descriptor queue.  <a href="class_c_thread_safe_queue.html#a78bc86a0f2e9387a40876eb130e0390c">More...</a><br /></td></tr>
 <tr class="separator:a78bc86a0f2e9387a40876eb130e0390c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -121,6 +119,8 @@ class CThreadSafeQueue&lt; CTaskClass &gt;</div><p >A thread-safe queue of task 
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="_thread_safe_queue_8h_source.html#l00042">42</a> of file <a class="el" href="_thread_safe_queue_8h_source.html">ThreadSafeQueue.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a3e963b051179fc579c0920359ff1744b" name="a3e963b051179fc579c0920359ff1744b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3e963b051179fc579c0920359ff1744b">&#9670;&nbsp;</a></span>CThreadSafeQueue()</h2>
@@ -141,6 +141,8 @@ template&lt;class CTaskClass &gt; </div>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="_thread_safe_queue_8h_source.html#l00063">63</a> of file <a class="el" href="_thread_safe_queue_8h_source.html">ThreadSafeQueue.h</a>.</p>
 
 </div>
 </div>
@@ -163,6 +165,8 @@ template&lt;class CTaskClass &gt; </div>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="_thread_safe_queue_8h_source.html#l00070">70</a> of file <a class="el" href="_thread_safe_queue_8h_source.html">ThreadSafeQueue.h</a>.</p>
 
 </div>
 </div>
@@ -198,6 +202,8 @@ template&lt;class CTaskClass &gt; </div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>true if the delete was successful, ie. the queue was not empty. </dd></dl>
 
+<p class="definition">Definition at line <a class="el" href="_thread_safe_queue_8h_source.html#l00092">92</a> of file <a class="el" href="_thread_safe_queue_8h_source.html">ThreadSafeQueue.h</a>.</p>
+
 </div>
 </div>
 <a id="a72896d1f529111fae2ddffd7ab8b478e" name="a72896d1f529111fae2ddffd7ab8b478e"></a>
@@ -219,6 +225,8 @@ template&lt;class CTaskClass &gt; </div>
   </table>
   </dd>
 </dl>
+
+<p class="definition">Definition at line <a class="el" href="_thread_safe_queue_8h_source.html#l00113">113</a> of file <a class="el" href="_thread_safe_queue_8h_source.html">ThreadSafeQueue.h</a>.</p>
 
 </div>
 </div>
@@ -252,12 +260,67 @@ template&lt;class CTaskClass &gt; </div>
   </dd>
 </dl>
 
+<p class="definition">Definition at line <a class="el" href="_thread_safe_queue_8h_source.html#l00079">79</a> of file <a class="el" href="_thread_safe_queue_8h_source.html">ThreadSafeQueue.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="abd18632e7249a4dad11cde9d31c6568f" name="abd18632e7249a4dad11cde9d31c6568f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd18632e7249a4dad11cde9d31c6568f">&#9670;&nbsp;</a></span>m_stdMutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class CTaskClass &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex <a class="el" href="class_c_thread_safe_queue.html">CThreadSafeQueue</a>&lt; CTaskClass &gt;::m_stdMutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_thread_safe_queue_8h_source.html#l00044">44</a> of file <a class="el" href="_thread_safe_queue_8h_source.html">ThreadSafeQueue.h</a>.</p>
+
+</div>
+</div>
+<a id="a78bc86a0f2e9387a40876eb130e0390c" name="a78bc86a0f2e9387a40876eb130e0390c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78bc86a0f2e9387a40876eb130e0390c">&#9670;&nbsp;</a></span>m_stdQueue</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class CTaskClass &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::queue&lt;CTaskClass&gt; <a class="el" href="class_c_thread_safe_queue.html">CThreadSafeQueue</a>&lt; CTaskClass &gt;::m_stdQueue</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_thread_safe_queue_8h_source.html#l00045">45</a> of file <a class="el" href="_thread_safe_queue_8h_source.html">ThreadSafeQueue.h</a>.</p>
+
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 1 2022 12:15:04 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
+Generated on Wed Jun 1 2022 14:56:15 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
 </small></address>
 </body>
 </html>
