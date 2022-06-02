@@ -83,7 +83,7 @@ $(function() {
 <p>Base task descriptor.  
  <a href="class_c_base_task.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_base_task_8h_source.html">BaseTask.h</a>&gt;</code></p>
+<p><code>#include &lt;BaseTask.h&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -105,11 +105,13 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:aa6469ec003bee1a3b7d58dcffd4884b1"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_base_task.html#aa6469ec003bee1a3b7d58dcffd4884b1">m_nTaskId</a> = 0</td></tr>
-<tr class="memdesc:aa6469ec003bee1a3b7d58dcffd4884b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Task identifier.  <a href="class_c_base_task.html#aa6469ec003bee1a3b7d58dcffd4884b1">More...</a><br /></td></tr>
+<tr class="memitem:aa6469ec003bee1a3b7d58dcffd4884b1"><td class="memItemLeft" align="right" valign="top"><a id="aa6469ec003bee1a3b7d58dcffd4884b1" name="aa6469ec003bee1a3b7d58dcffd4884b1"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_nTaskId</b> = 0</td></tr>
+<tr class="memdesc:aa6469ec003bee1a3b7d58dcffd4884b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Task identifier. <br /></td></tr>
 <tr class="separator:aa6469ec003bee1a3b7d58dcffd4884b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c139340262f1effa34e3084ed178c5f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_base_task.html#a8c139340262f1effa34e3084ed178c5f">m_nThreadId</a> = <a class="el" href="_base_task_8h.html#aeea74f04064490bb260bd3c9bc6bf19b">max_size_t</a></td></tr>
-<tr class="memdesc:a8c139340262f1effa34e3084ed178c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identifier of thread that performed task.  <a href="class_c_base_task.html#a8c139340262f1effa34e3084ed178c5f">More...</a><br /></td></tr>
+<tr class="memitem:a8c139340262f1effa34e3084ed178c5f"><td class="memItemLeft" align="right" valign="top"><a id="a8c139340262f1effa34e3084ed178c5f" name="a8c139340262f1effa34e3084ed178c5f"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_nThreadId</b> = <a class="el" href="_base_task_8h.html#aeea74f04064490bb260bd3c9bc6bf19b">max_size_t</a></td></tr>
+<tr class="memdesc:a8c139340262f1effa34e3084ed178c5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identifier of thread that performed task. <br /></td></tr>
 <tr class="separator:a8c139340262f1effa34e3084ed178c5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pri-static-attribs" name="pri-static-attribs"></a>
@@ -121,8 +123,6 @@ Static Private Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >The base task descriptor describes a base task, including a task identifier, a thread identifier which is to be set by the thread that performs this task, and a function to perform the task. You should derive your task desciptor from this class.</p>
 <p >Your task descriptor should implement a constructor for any task-related initialization and it should override function <a class="el" href="class_c_base_task.html#a7a45808d0356031760702d7376cf55bd" title="Perform this task.">Perform()</a> with the code to perform your task. Each task descriptor you instantiate will automatically get a unique task identifier m_nTaskId which can be read using <a class="el" href="class_c_base_task.html#ac1c06b41ce62a2b19356614b761d0fe9" title="Get task identifier.">GetTaskId()</a>. This is maintained using a private static atomic member variable m_nNumTasks that is incremented and copied to m_nTaskId by the <a class="el" href="class_c_base_task.html" title="Base task descriptor.">CBaseTask</a> constructor. It is recommended that you do not interfere with this process. You are responsible for setting the thread identifier by calling <a class="el" href="class_c_base_task.html#a47be69a4a75e9640997c9eff20d8ad08" title="Set thread identifier.">SetThreadId()</a> when this task descriptor is assigned to a thread. The thread identifier can be read later by calling <a class="el" href="class_c_base_task.html#a1c134cd1977a763485f871fe1019e6a8" title="Get thread identifier.">GetThreadId()</a>. The task and thread identifiers are there for debugging purposes and do not impose a significant load on time or memory requirements. </p>
-
-<p class="definition">Definition at line <a class="el" href="_base_task_8h_source.html#l00055">55</a> of file <a class="el" href="_base_task_8h_source.html">BaseTask.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a0d0916f5d56c44cd65464e5a75a52dac" name="a0d0916f5d56c44cd65464e5a75a52dac"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0d0916f5d56c44cd65464e5a75a52dac">&#9670;&nbsp;</a></span>CBaseTask()</h2>
@@ -139,8 +139,6 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >The default constructor. </p>
-
-<p class="definition">Definition at line <a class="el" href="_base_task_8cpp_source.html#l00032">32</a> of file <a class="el" href="_base_task_8cpp_source.html">BaseTask.cpp</a>.</p>
 
 </div>
 </div>
@@ -161,8 +159,6 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p >Reader function for the task identifier. </p><dl class="section return"><dt>Returns</dt><dd>The task identifier. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_task_8cpp_source.html#l00046">46</a> of file <a class="el" href="_base_task_8cpp_source.html">BaseTask.cpp</a>.</p>
-
 </div>
 </div>
 <a id="a1c134cd1977a763485f871fe1019e6a8" name="a1c134cd1977a763485f871fe1019e6a8"></a>
@@ -180,8 +176,6 @@ Static Private Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <p >Reader function for the thread identifier. If this is not correctly set by the processing thread, then this will be a very large number. </p><dl class="section return"><dt>Returns</dt><dd>The thread identifier. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_base_task_8cpp_source.html#l00061">61</a> of file <a class="el" href="_base_task_8cpp_source.html">BaseTask.cpp</a>.</p>
 
 </div>
 </div>
@@ -209,8 +203,6 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p >Perform the task. This function is a stub that is to be overridden in derived classes. </p>
 
-<p class="definition">Definition at line <a class="el" href="_base_task_8cpp_source.html#l00039">39</a> of file <a class="el" href="_base_task_8cpp_source.html">BaseTask.cpp</a>.</p>
-
 </div>
 </div>
 <a id="a47be69a4a75e9640997c9eff20d8ad08" name="a47be69a4a75e9640997c9eff20d8ad08"></a>
@@ -234,8 +226,6 @@ Static Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="_base_task_8cpp_source.html#l00053">53</a> of file <a class="el" href="_base_task_8cpp_source.html">BaseTask.cpp</a>.</p>
 
 </div>
 </div>
@@ -261,62 +251,12 @@ Static Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 <p >Number of tasks. </p>
 
-<p class="definition">Definition at line <a class="el" href="_base_task_8h_source.html#l00057">57</a> of file <a class="el" href="_base_task_8h_source.html">BaseTask.h</a>.</p>
-
-</div>
-</div>
-<a id="aa6469ec003bee1a3b7d58dcffd4884b1" name="aa6469ec003bee1a3b7d58dcffd4884b1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6469ec003bee1a3b7d58dcffd4884b1">&#9670;&nbsp;</a></span>m_nTaskId</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t CBaseTask::m_nTaskId = 0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_base_task_8h_source.html#l00060">60</a> of file <a class="el" href="_base_task_8h_source.html">BaseTask.h</a>.</p>
-
-</div>
-</div>
-<a id="a8c139340262f1effa34e3084ed178c5f" name="a8c139340262f1effa34e3084ed178c5f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c139340262f1effa34e3084ed178c5f">&#9670;&nbsp;</a></span>m_nThreadId</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t CBaseTask::m_nThreadId = <a class="el" href="_base_task_8h.html#aeea74f04064490bb260bd3c9bc6bf19b">max_size_t</a></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_base_task_8h_source.html#l00061">61</a> of file <a class="el" href="_base_task_8h_source.html">BaseTask.h</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 1 2022 14:56:15 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
+Generated on Thu Jun 2 2022 13:53:38 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
 </small></address>
 </body>
 </html>

@@ -83,7 +83,7 @@ $(function() {
 <p>The base thread manager.  
  <a href="class_c_base_thread_manager.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>&gt;</code></p>
+<p><code>#include &lt;BaseThreadManager.h&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for CBaseThreadManager&lt; CTaskClass &gt;:</div>
 <div class="dyncontent">
@@ -129,24 +129,29 @@ Protected Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
-<tr class="memitem:a2b0b0ad253725d9bab12ec9efd15dbf9"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::thread &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_base_thread_manager.html#a2b0b0ad253725d9bab12ec9efd15dbf9">m_vThread</a></td></tr>
-<tr class="memdesc:a2b0b0ad253725d9bab12ec9efd15dbf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread list.  <a href="class_c_base_thread_manager.html#a2b0b0ad253725d9bab12ec9efd15dbf9">More...</a><br /></td></tr>
+<tr class="memitem:a2b0b0ad253725d9bab12ec9efd15dbf9"><td class="memItemLeft" align="right" valign="top"><a id="a2b0b0ad253725d9bab12ec9efd15dbf9" name="a2b0b0ad253725d9bab12ec9efd15dbf9"></a>
+std::vector&lt; std::thread &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_vThread</b></td></tr>
+<tr class="memdesc:a2b0b0ad253725d9bab12ec9efd15dbf9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thread list. <br /></td></tr>
 <tr class="separator:a2b0b0ad253725d9bab12ec9efd15dbf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e9ef0ff4397c4703969221e4f99e7f7"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_base_thread_manager.html#a3e9ef0ff4397c4703969221e4f99e7f7">m_nNumThreads</a> = 0</td></tr>
-<tr class="memdesc:a3e9ef0ff4397c4703969221e4f99e7f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of threads in use.  <a href="class_c_base_thread_manager.html#a3e9ef0ff4397c4703969221e4f99e7f7">More...</a><br /></td></tr>
+<tr class="memitem:a3e9ef0ff4397c4703969221e4f99e7f7"><td class="memItemLeft" align="right" valign="top"><a id="a3e9ef0ff4397c4703969221e4f99e7f7" name="a3e9ef0ff4397c4703969221e4f99e7f7"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>m_nNumThreads</b> = 0</td></tr>
+<tr class="memdesc:a3e9ef0ff4397c4703969221e4f99e7f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Number of threads in use. <br /></td></tr>
 <tr class="separator:a3e9ef0ff4397c4703969221e4f99e7f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
 Additional Inherited Members</h2></td></tr>
 <tr class="inherit_header pro_static_attribs_class_c_common"><td colspan="2" onclick="javascript:toggleInherit('pro_static_attribs_class_c_common')"><img src="closed.png" alt="-"/>&#160;Static Protected Attributes inherited from <a class="el" href="class_c_common.html">CCommon&lt; CTaskClass &gt;</a></td></tr>
-<tr class="memitem:aebfe8ee66fd56b709b98691655fc2d08 inherit pro_static_attribs_class_c_common"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_c_thread_safe_queue.html">CThreadSafeQueue</a>&lt; CTaskClass * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_common.html#aebfe8ee66fd56b709b98691655fc2d08">m_qRequest</a></td></tr>
-<tr class="memdesc:aebfe8ee66fd56b709b98691655fc2d08 inherit pro_static_attribs_class_c_common"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request queue.  <a href="class_c_common.html#aebfe8ee66fd56b709b98691655fc2d08">More...</a><br /></td></tr>
+<tr class="memitem:aebfe8ee66fd56b709b98691655fc2d08 inherit pro_static_attribs_class_c_common"><td class="memItemLeft" align="right" valign="top"><a id="aebfe8ee66fd56b709b98691655fc2d08" name="aebfe8ee66fd56b709b98691655fc2d08"></a>
+static <a class="el" href="class_c_thread_safe_queue.html">CThreadSafeQueue</a>&lt; CTaskClass * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_qRequest</b></td></tr>
+<tr class="memdesc:aebfe8ee66fd56b709b98691655fc2d08 inherit pro_static_attribs_class_c_common"><td class="mdescLeft">&#160;</td><td class="mdescRight">Request queue. <br /></td></tr>
 <tr class="separator:aebfe8ee66fd56b709b98691655fc2d08 inherit pro_static_attribs_class_c_common"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab81a795af40b57222917b61d129ff023 inherit pro_static_attribs_class_c_common"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_c_thread_safe_queue.html">CThreadSafeQueue</a>&lt; CTaskClass * &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_common.html#ab81a795af40b57222917b61d129ff023">m_qResult</a></td></tr>
-<tr class="memdesc:ab81a795af40b57222917b61d129ff023 inherit pro_static_attribs_class_c_common"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result queue.  <a href="class_c_common.html#ab81a795af40b57222917b61d129ff023">More...</a><br /></td></tr>
+<tr class="memitem:ab81a795af40b57222917b61d129ff023 inherit pro_static_attribs_class_c_common"><td class="memItemLeft" align="right" valign="top"><a id="ab81a795af40b57222917b61d129ff023" name="ab81a795af40b57222917b61d129ff023"></a>
+static <a class="el" href="class_c_thread_safe_queue.html">CThreadSafeQueue</a>&lt; CTaskClass * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_qResult</b></td></tr>
+<tr class="memdesc:ab81a795af40b57222917b61d129ff023 inherit pro_static_attribs_class_c_common"><td class="mdescLeft">&#160;</td><td class="mdescRight">Result queue. <br /></td></tr>
 <tr class="separator:ab81a795af40b57222917b61d129ff023 inherit pro_static_attribs_class_c_common"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8374f04015b722848944a92365959e39 inherit pro_static_attribs_class_c_common"><td class="memItemLeft" align="right" valign="top">static bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_common.html#a8374f04015b722848944a92365959e39">m_bForceExit</a> = false</td></tr>
-<tr class="memdesc:a8374f04015b722848944a92365959e39 inherit pro_static_attribs_class_c_common"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force exit flag.  <a href="class_c_common.html#a8374f04015b722848944a92365959e39">More...</a><br /></td></tr>
+<tr class="memitem:a8374f04015b722848944a92365959e39 inherit pro_static_attribs_class_c_common"><td class="memItemLeft" align="right" valign="top"><a id="a8374f04015b722848944a92365959e39" name="a8374f04015b722848944a92365959e39"></a>
+static bool&#160;</td><td class="memItemRight" valign="bottom"><b>m_bForceExit</b> = false</td></tr>
+<tr class="memdesc:a8374f04015b722848944a92365959e39 inherit pro_static_attribs_class_c_common"><td class="mdescLeft">&#160;</td><td class="mdescRight">Force exit flag. <br /></td></tr>
 <tr class="separator:a8374f04015b722848944a92365959e39 inherit pro_static_attribs_class_c_common"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -157,8 +162,6 @@ class CBaseThreadManager&lt; CTaskClass &gt;</div><p >The thread manager takes c
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00052">52</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="ac9ffeb558cd7bbe15c0680fdb7ddd287" name="ac9ffeb558cd7bbe15c0680fdb7ddd287"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac9ffeb558cd7bbe15c0680fdb7ddd287">&#9670;&nbsp;</a></span>CBaseThreadManager()</h2>
@@ -179,8 +182,6 @@ template&lt;class CTaskClass &gt; </div>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00080">80</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
 
 </div>
 </div>
@@ -212,8 +213,6 @@ template&lt;class CTaskClass &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00089">89</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
-
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -237,8 +236,6 @@ template&lt;class CTaskClass &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00126">126</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
-
 </div>
 </div>
 <a id="aeec7eb022bd2928b233cd0418d7a839a" name="aeec7eb022bd2928b233cd0418d7a839a"></a>
@@ -255,8 +252,6 @@ template&lt;class CTaskClass &gt; </div>
       </table>
 </div><div class="memdoc">
 <p >Reader function for the number of threads used by this application. Assumes that <code>m_nNumThreads</code> contains this value. </p><dl class="section return"><dt>Returns</dt><dd>Number of threads used. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00167">167</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
 
 </div>
 </div>
@@ -290,8 +285,6 @@ template&lt;class CTaskClass &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00108">108</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
-
 </div>
 </div>
 <a id="a0dfb5636ec4d410e879473b485e37a16" name="a0dfb5636ec4d410e879473b485e37a16"></a>
@@ -313,8 +306,6 @@ template&lt;class CTaskClass &gt; </div>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00153">153</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
 
 </div>
 </div>
@@ -356,8 +347,6 @@ template&lt;class CTaskClass &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00145">145</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
-
 </div>
 </div>
 <a id="acb6ef83b1e6215df955a717b7b61f179" name="acb6ef83b1e6215df955a717b7b61f179"></a>
@@ -379,8 +368,6 @@ template&lt;class CTaskClass &gt; </div>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00117">117</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
 
 </div>
 </div>
@@ -404,67 +391,12 @@ template&lt;class CTaskClass &gt; </div>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00135">135</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a3e9ef0ff4397c4703969221e4f99e7f7" name="a3e9ef0ff4397c4703969221e4f99e7f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e9ef0ff4397c4703969221e4f99e7f7">&#9670;&nbsp;</a></span>m_nNumThreads</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class CTaskClass &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">size_t <a class="el" href="class_c_base_thread_manager.html">CBaseThreadManager</a>&lt; CTaskClass &gt;::m_nNumThreads = 0</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00055">55</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
-
-</div>
-</div>
-<a id="a2b0b0ad253725d9bab12ec9efd15dbf9" name="a2b0b0ad253725d9bab12ec9efd15dbf9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2b0b0ad253725d9bab12ec9efd15dbf9">&#9670;&nbsp;</a></span>m_vThread</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;class CTaskClass &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::vector&lt;std::thread&gt; <a class="el" href="class_c_base_thread_manager.html">CBaseThreadManager</a>&lt; CTaskClass &gt;::m_vThread</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="_base_thread_manager_8h_source.html#l00054">54</a> of file <a class="el" href="_base_thread_manager_8h_source.html">BaseThreadManager.h</a>.</p>
-
 </div>
 </div>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Jun 1 2022 14:56:15 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
+Generated on Thu Jun 2 2022 13:53:38 for Thread++ by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.4
 </small></address>
 </body>
 </html>

@@ -294,6 +294,10 @@ A simple test executable is provided as part of this project
 \anchor sec5
 ## 5. Using This Code
 
+You can use `thread++` in your own multi-threaded project by following these
+instructions. For a non-trivial example, see
+[https://github.com/Ian-Parberry/peacefulqueens_mt](https://github.com/Ian-Parberry/peacefulqueens_mt).
+
 \anchor sec5point1
 ### 5.1 Windows and Visual Studio
 
