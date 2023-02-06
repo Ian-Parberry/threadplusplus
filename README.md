@@ -8,8 +8,8 @@ for code documentation.
 
 ## Requirements
 ### Windows
-Windows 10 and Visual C++.
-This code has been tested with Visual Studio 2019 Community under Windows 10.
+Windows and Visual C++.
+This code has been tested with Visual Studio 2022 Community under Windows 11.
 
 ### *NIX
 Some *NIX operating system with g++.
