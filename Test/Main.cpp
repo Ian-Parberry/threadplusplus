@@ -32,7 +32,7 @@
 /// \brief Main.
 ///
 /// Create a thread manager and a timer. Add some empty tasks to the
-/// task manager. Start the timer. Report current data and time, and the
+/// thread manager. Start the timer. Report current data and time, and the
 /// number of available threads. Spawn the threads and wait for them to
 /// terminate. Use the timer to report current time, elapsed time, and
 /// CPU time, then have the thread manager process the results.
